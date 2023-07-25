@@ -1,0 +1,34 @@
+# 1、define library
+add_library(Magic STATIC "")
+
+# 2、add sources
+file(GLOB_RECURSE srcs
+    ${CMAKE_CURRENT_LIST_DIR}/src/*.h
+    ${CMAKE_CURRENT_LIST_DIR}/src/*.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/*.cpp
+)
+
+target_sources(Magic
+PRIVATE
+    ${srcs}
+)
+
+source_group(TREE ${CMAKE_CURRENT_LIST_DIR} FILES ${srcs})
+
+# 3、add include directories
+target_include_directories(Magic
+PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/vendor/glad/include
+    ${CMAKE_CURRENT_LIST_DIR}/vendor/glfw/include
+)
+
+# 4.add vendor
+add_subdirectory(vendor/glad)
+add_subdirectory(vendor/glfw)
+
+# 5.link library
+target_link_libraries(Magic
+PRIVATE
+    glad
+    glfw
+)

@@ -1,0 +1,6 @@
+[submodule "Magic/vendor/spdlog"]
+	path = Magic/vendor/spdlog
+	url = https://github.com/gabime/spdlog.git
+[submodule "Magic/vendor/glfw"]
+	path = Magic/vendor/glfw
+	url = https://github.com/glfw/glfw.git
