@@ -17,3 +17,6 @@ build
 *.cmake
 CMakeCache.txt
 CMakeFiles
+
+//imgui
+imgui.ini

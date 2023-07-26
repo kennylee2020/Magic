@@ -6,6 +6,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <imgui.h>
+#include <imgui_impl_opengl3.h>
+#include <imgui_impl_glfw.h>
+
 namespace Magic {
 	Application::Application()
 	{
@@ -115,6 +119,13 @@ namespace Magic {
 		glVertexAttribPointer(vcol_location, 3, GL_FLOAT, GL_FALSE,
 			sizeof(vertices[0]), (void*)(sizeof(float) * 2));
 
+		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO();
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+		ImGui_ImplGlfw_InitForOpenGL(window,true);
+		ImGui_ImplOpenGL3_Init();
+
 		while (!glfwWindowShouldClose(window))
 		{
 			float ratio;
@@ -129,9 +140,26 @@ namespace Magic {
 			glUseProgram(program);
 			//glDrawArrays(GL_TRIANGLES, 0, 3);
 
+			ImGui_ImplOpenGL3_NewFrame();
+			ImGui_ImplGlfw_NewFrame();
+			ImGui::NewFrame();
+			ImGui::ShowDemoWindow();
+			
+			float floatValue = 0;
+			ImGui::Begin("Magic");
+			ImGui::DragFloat("Test Float", &floatValue);
+			ImGui::End();
+
+			ImGui::Render();
+			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
 			glfwSwapBuffers(window);
 			glfwPollEvents();
 		}
+
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplGlfw_Shutdown();
+		ImGui::DestroyContext();
 
 		glfwDestroyWindow(window);
 
