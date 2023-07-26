@@ -42,11 +42,5 @@ PRIVATE
 	Magic
 )
 
-# 8、add include directories
-target_include_directories(Sample
-PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/Magic/src
-)
-
-# 9、Startup Project
+# 8、Startup Project
 set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT Sample)

@@ -1,5 +1,5 @@
 #pragma once
-#include "Application.h";
+#include "Magic.h"
 
 namespace Sample {
 	class SampleApplication : public Magic::Application

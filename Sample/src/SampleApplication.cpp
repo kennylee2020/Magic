@@ -13,5 +13,6 @@ namespace Sample {
 int main()
 {
 	Sample::SampleApplication app;
+	Magic::MAG_INFO("Sample start!");
 	app.Run();
 }

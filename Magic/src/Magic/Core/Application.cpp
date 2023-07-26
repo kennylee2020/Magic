@@ -1,6 +1,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "magicpch.h"
 #include "Application.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,6 +9,8 @@
 namespace Magic {
 	Application::Application()
 	{
+		Log::Init();
+		MAG_INFO_CORE("Magic start!");
 	}
 
 	Application::~Application()
@@ -124,7 +127,7 @@ namespace Magic {
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			glUseProgram(program);
-			glDrawArrays(GL_TRIANGLES, 0, 3);
+			//glDrawArrays(GL_TRIANGLES, 0, 3);
 
 			glfwSwapBuffers(window);
 			glfwPollEvents();
