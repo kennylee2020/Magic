@@ -26,6 +26,7 @@ add_subdirectory(vendor)
 add_subdirectory(vendor/glad)
 add_subdirectory(vendor/glfw)
 add_subdirectory(vendor/spdlog)
+add_subdirectory(vendor/glm)
 
 # 5、add include directories
 target_include_directories(Magic
@@ -34,6 +35,7 @@ PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/vendor/glad/include
     ${CMAKE_CURRENT_LIST_DIR}/vendor/glfw/include
     ${CMAKE_CURRENT_LIST_DIR}/vendor/spdlog/include
+    ${CMAKE_CURRENT_LIST_DIR}/vendor/glm
     ${CMAKE_CURRENT_LIST_DIR}/vendor/imgui
     ${CMAKE_CURRENT_LIST_DIR}/vendor/imgui/backends
 )
@@ -43,6 +45,7 @@ target_link_libraries(Magic
 PRIVATE
     glad
     glfw
+    glm
     imgui
 INTERFACE
     spdlog
