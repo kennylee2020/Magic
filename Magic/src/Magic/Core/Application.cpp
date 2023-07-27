@@ -2,7 +2,9 @@
 #include <GLFW/glfw3.h>
 
 #include "magicpch.h"
-#include "Application.h"
+#include "Magic/Event/Event.h"
+#include "Magic/Core/Application.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -17,54 +19,45 @@
 #include <glm/ext/matrix_clip_space.hpp> // glm::perspective
 #include <glm/ext/scalar_constants.hpp> // glm::pi
 
-
 namespace Magic {
 	Application::Application()
 	{
-		Log::Init();
 		MAG_INFO_CORE("Magic start!");
+		m_Window = Window::Create({ "Magic", 640, 480 });
+		m_Window->setWindowEventCallback(BIND_EVENT_CALLBACK(Application::onEvent));
 	}
 
-	Application::~Application()
-	{
+	bool Application::onEvent(Event& event) {
+		EventDispatcher dispatcher(event);
+		dispatcher.dispath<WindowCloseEvent>(BIND_EVENT_CALLBACK(Application::onWindowCloseEvent));
+		dispatcher.dispath<WindowResizeEvent>(BIND_EVENT_CALLBACK(Application::onWindowResizeEvent));
+		dispatcher.dispath<WindowFocusEvent>(BIND_EVENT_CALLBACK(Application::onWindowFocusEvent));
+		dispatcher.dispath<WindowLostFocus>(BIND_EVENT_CALLBACK(Application::onWindowLostFocusEvent));
+		return true;
 	}
 
-	static void error_callback(int error, const char* description)
-	{
-		fprintf(stderr, "Error: %s\n", description);
+	bool Application::onWindowFocusEvent(WindowFocusEvent& event) {
+		MAG_INFO("onWindowFocusEvent");
+		return true;
 	}
 
-	static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-	{
-		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-			glfwSetWindowShouldClose(window, GLFW_TRUE);
+	bool Application::onWindowCloseEvent(WindowCloseEvent& event) {
+		MAG_INFO("onWindowCloseEvent");
+		return true;
 	}
 
-	void Application::Run()
+	bool Application::onWindowResizeEvent(WindowResizeEvent& event) {
+		MAG_INFO("onWindowResizeEvent");
+		return true;
+	}
+
+	bool Application::onWindowLostFocusEvent(WindowLostFocus& event) {
+		MAG_INFO("onWindowLostFocusEvent");
+		return true;
+	}
+
+	void Application::run()
 	{
-		GLFWwindow* window;
-		glfwSetErrorCallback(error_callback);
-
-		if (!glfwInit()) {
-			exit(EXIT_FAILURE);
-		}
-		
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-
-		window = glfwCreateWindow(640, 480, "Magic", NULL, NULL);
-		if (!window)
-		{
-			glfwTerminate();
-			exit(EXIT_FAILURE);
-		}
-
-		glfwSetKeyCallback(window, key_callback);
-
-		glfwMakeContextCurrent(window);
-		gladLoadGL();
-		glfwSwapInterval(1);
-
 		static const struct
 		{
 			float x, y;
@@ -96,6 +89,10 @@ namespace Magic {
 			"    gl_FragColor = vec4(color, 1.0);\n"
 			"}\n";
 
+		GLFWwindow* window = (GLFWwindow*)m_Window->getNativeWindow();
+		glfwMakeContextCurrent(window);
+		gladLoadGL();
+		glfwSwapInterval(1);
 
 		GLuint vertex_buffer, vertex_shader, fragment_shader, program;
 		GLint mvp_location, vpos_location, vcol_location;
@@ -131,8 +128,13 @@ namespace Magic {
 		ImGuiIO& io = ImGui::GetIO();
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-		ImGui_ImplGlfw_InitForOpenGL(window,true);
+
+		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init();
+
+		glfwMakeContextCurrent(window);
+		gladLoadGL();
+		glfwSwapInterval(1);
 
 		while (!glfwWindowShouldClose(window))
 		{
@@ -149,7 +151,7 @@ namespace Magic {
 			//glDrawArrays(GL_TRIANGLES, 0, 3);
 
 			float Translate = 0;
-			glm::vec2 Rotate(0,0);
+			glm::vec2 Rotate(0, 0);
 			glm::mat4 Projection = glm::perspective(glm::pi<float>() * 0.25f, 4.0f / 3.0f, 0.1f, 100.f);
 			glm::mat4 View = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -Translate));
 			View = glm::rotate(View, Rotate.y, glm::vec3(-1.0f, 0.0f, 0.0f));
@@ -160,7 +162,7 @@ namespace Magic {
 			ImGui_ImplGlfw_NewFrame();
 			ImGui::NewFrame();
 			ImGui::ShowDemoWindow();
-			
+
 			float floatValue = 0;
 			ImGui::Begin("Magic");
 			ImGui::DragFloat("Test Float", &floatValue);
@@ -169,17 +171,13 @@ namespace Magic {
 			ImGui::Render();
 			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-			glfwSwapBuffers(window);
-			glfwPollEvents();
+			m_Window->onUpdate();
 		}
 
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
-
-		glfwDestroyWindow(window);
-
-		glfwTerminate();
+	
 		exit(EXIT_SUCCESS);
 	}
 }

@@ -1,8 +1,10 @@
 #include "SampleApplication.h"
+#include "Magic/Core/EntryPoint.h"
 
 namespace Sample {
 	SampleApplication::SampleApplication()
 	{
+		Magic::MAG_INFO("Sample start!");
 	}
 
 	SampleApplication::~SampleApplication()
@@ -10,9 +12,6 @@ namespace Sample {
 	}
 }
 
-int main()
-{
-	Sample::SampleApplication app;
-	Magic::MAG_INFO("Sample start!");
-	app.Run();
+Magic::Application* Magic::CreateApplication() {
+	return new Sample::SampleApplication();
 }
