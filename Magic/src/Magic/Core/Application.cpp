@@ -33,6 +33,15 @@ namespace Magic {
 		dispatcher.dispath<WindowResizeEvent>(BIND_EVENT_CALLBACK(Application::onWindowResizeEvent));
 		dispatcher.dispath<WindowFocusEvent>(BIND_EVENT_CALLBACK(Application::onWindowFocusEvent));
 		dispatcher.dispath<WindowLostFocus>(BIND_EVENT_CALLBACK(Application::onWindowLostFocusEvent));
+
+		dispatcher.dispath<MouseButtonDownEvent>(BIND_EVENT_CALLBACK(Application::onMouseButtonDownEvent));
+		dispatcher.dispath<MouseButtonUpEvent>(BIND_EVENT_CALLBACK(Application::onMouseButtonUpEvent));
+		dispatcher.dispath<MouseScrollEvent>(BIND_EVENT_CALLBACK(Application::onMouseScrollEvent));
+		dispatcher.dispath<MouseMoveEvent>(BIND_EVENT_CALLBACK(Application::onMouseMoveEvent));
+
+		dispatcher.dispath<KeyDownEvent>(BIND_EVENT_CALLBACK(Application::onKeyDownEvent));
+		dispatcher.dispath<KeyUpEvent>(BIND_EVENT_CALLBACK(Application::onKeyUpEvent));
+		dispatcher.dispath<KeyTypedEvent>(BIND_EVENT_CALLBACK(Application::onKeyTypedEvent));
 		return true;
 	}
 
@@ -53,6 +62,48 @@ namespace Magic {
 
 	bool Application::onWindowLostFocusEvent(WindowLostFocus& event) {
 		MAG_INFO("onWindowLostFocusEvent");
+		return true;
+	}
+
+	bool Application::onMouseButtonDownEvent(MouseButtonDownEvent& event)
+	{
+		MAG_INFO("onMouseButtonDownEvent");
+		return true;
+	}
+
+	bool Application::onMouseButtonUpEvent(MouseButtonUpEvent& event)
+	{
+		MAG_INFO("onMouseButtonUpEvent");
+		return true;
+	}
+
+	bool Application::onMouseMoveEvent(MouseMoveEvent& event)
+	{
+		MAG_INFO("onMouseMoveEvent {0} {1}", event.getX(), event.getY());
+		return true;
+	}
+
+	bool Application::onMouseScrollEvent(MouseScrollEvent& event)
+	{
+		MAG_INFO("onMouseScrollEvent {0} {1}", event.getDeltaX(), event.getDeltaY());
+		return true;
+	}
+
+	bool Application::onKeyDownEvent(KeyDownEvent& event)
+	{
+		MAG_INFO("onKeyDownEvent");
+		return true;
+	}
+
+	bool Application::onKeyUpEvent(KeyUpEvent& event)
+	{
+		MAG_INFO("onKeyUpEvent");
+		return true;
+	}
+
+	bool Application::onKeyTypedEvent(KeyTypedEvent& event)
+	{
+		MAG_INFO("onKeyTypedEvent {0}", event.getKeycode());
 		return true;
 	}
 

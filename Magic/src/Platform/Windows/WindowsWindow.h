@@ -1,6 +1,6 @@
 #pragma once
-#include "Magic/Core/Window.h"
 #include "GLFW/glfw3.h"
+#include "Magic/Core/Window.h"
 
 namespace Magic {
 	class WindowsWindow : public Window

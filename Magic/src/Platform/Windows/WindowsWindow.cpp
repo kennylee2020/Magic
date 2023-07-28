@@ -1,21 +1,8 @@
 #include "magicpch.h"
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "Magic/Event/Event.h"
 #include "Magic/Core/Application.h"
 #include "WindowsWindow.h"
-
-#include <imgui.h>
-#include <imgui_impl_opengl3.h>
-#include <imgui_impl_glfw.h>
-
-#include <glm/vec3.hpp>
-#include <glm/vec4.hpp>
-#include <glm/mat4x4.hpp> // glm::mat4
-#include <glm/ext/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale
-#include <glm/ext/matrix_clip_space.hpp> // glm::perspective
-#include <glm/ext/scalar_constants.hpp> // glm::pi
 
 namespace Magic {
 	static void error_callback(int error, const char* description)
@@ -27,20 +14,56 @@ namespace Magic {
 	{
 		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 			glfwSetWindowShouldClose(window, GLFW_TRUE);
+		if (action == GLFW_PRESS) {
+			Application* app = (Application*)glfwGetWindowUserPointer(window);
+			app->onEvent(KeyDownEvent(key, 0));
+		}else if (action == GLFW_RELEASE) {
+			Application* app = (Application*)glfwGetWindowUserPointer(window);
+			app->onEvent(KeyUpEvent(key));
+		}else if (action == GLFW_REPEAT) {
+			Application* app = (Application*)glfwGetWindowUserPointer(window);
+			app->onEvent(KeyDownEvent(key, 1));
+		}
+	}
+
+	static void char_callback(GLFWwindow* window, unsigned int keycode)
+	{	
+		Application* app = (Application*)glfwGetWindowUserPointer(window);
+		app->onEvent(KeyTypedEvent(keycode));
+	}
+
+	static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+	{
+		Application* app = (Application*)glfwGetWindowUserPointer(window);
+		app->onEvent(MouseScrollEvent(xoffset, yoffset));
+	}
+
+	static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+	{
+		Application* app = (Application*)glfwGetWindowUserPointer(window);
+		if (action == GLFW_PRESS) {
+			app->onEvent(MouseButtonDownEvent(button));
+		}else if(action == GLFW_RELEASE) {
+			app->onEvent(MouseButtonUpEvent(button));
+		}
+	}
+
+	static void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos)
+	{
+		Application* app = (Application*)glfwGetWindowUserPointer(window);
+		app->onEvent(MouseMoveEvent(xpos, ypos));
 	}
 
 	static void window_close_callback(GLFWwindow* window)
 	{
 		Application* app = (Application*)glfwGetWindowUserPointer(window);
-		WindowCloseEvent event;
-		app->onEvent(event);
+		app->onEvent(WindowCloseEvent());
 	}
 
 	static void window_size_callback(GLFWwindow* window, int width, int height)
 	{
 		Application* app = (Application*)glfwGetWindowUserPointer(window);
-		WindowResizeEvent event(width, height);
-		app->onEvent(event);
+		app->onEvent(WindowResizeEvent(width, height));
 	}
 
 	static void window_focus_callback(GLFWwindow* window, int focused)
@@ -98,6 +121,10 @@ namespace Magic {
 		m_Window = window;
 		glfwSetWindowUserPointer(window, this);
 		glfwSetKeyCallback(window, key_callback);
+		glfwSetCharCallback(window, char_callback);
+		glfwSetScrollCallback(window, scroll_callback);
+		glfwSetMouseButtonCallback(window, mouse_button_callback);
+		glfwSetCursorPosCallback(window, cursor_pos_callback);
 		glfwSetWindowCloseCallback(window, window_close_callback);
 		glfwSetWindowSizeCallback(window, window_size_callback);
 		glfwSetWindowFocusCallback(window, window_focus_callback);

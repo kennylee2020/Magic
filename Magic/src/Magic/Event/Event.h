@@ -9,8 +9,8 @@ namespace Magic {
 		{
 			None = 0,
 			WindowClose,WindowResize,WindowFocus,WindowLostFocus,
-			MouseDown,MouseUp,MouseMove,MouseScroll,
-			KeyDown,KeyUp,
+			MouseButtonDown,MouseButtonUp,MouseMove,MouseScroll,
+			KeyDown,KeyUp,KeyTyped,
 		};
 		enum EventCategory 
 		{
