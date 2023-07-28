@@ -19,6 +19,8 @@
 #include <glm/ext/matrix_clip_space.hpp> // glm::perspective
 #include <glm/ext/scalar_constants.hpp> // glm::pi
 
+#include <stb_image.h>
+
 namespace Magic {
 	Application::Application()
 	{
@@ -79,13 +81,13 @@ namespace Magic {
 
 	bool Application::onMouseMoveEvent(MouseMoveEvent& event)
 	{
-		MAG_INFO("onMouseMoveEvent {0} {1}", event.getX(), event.getY());
+		//MAG_INFO("onMouseMoveEvent {0} {1}", event.getX(), event.getY());
 		return true;
 	}
 
 	bool Application::onMouseScrollEvent(MouseScrollEvent& event)
 	{
-		MAG_INFO("onMouseScrollEvent {0} {1}", event.getDeltaX(), event.getDeltaY());
+		//MAG_INFO("onMouseScrollEvent {0} {1}", event.getDeltaX(), event.getDeltaY());
 		return true;
 	}
 
@@ -186,6 +188,15 @@ namespace Magic {
 		glfwMakeContextCurrent(window);
 		gladLoadGL();
 		glfwSwapInterval(1);
+
+		int width,height,channel;
+		stbi_uc* data = stbi_load("assets/image/test_img.jpg",&width,&height,&channel,3);
+		if(data){
+			MAG_INFO_CORE("Load Successed!");
+		}else {
+			MAG_INFO_CORE("Load Failed!");
+		}
+		stbi_image_free(data);
 
 		while (!glfwWindowShouldClose(window))
 		{

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1)
 
 # 1.Set project name
-project(Sample VERSION 1.0)
+project(SampleSolution VERSION 1.0)
 
 # 2.Set c++ version
 set(CMAKE_CXX_STANDARD 11)
@@ -18,29 +18,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/bin)
 
 # 4.Add subdirectory
 add_subdirectory(Magic)
+add_subdirectory(Sample)
 
-# 5、executable
-add_executable(Sample "")
-
-# 6、add sources
-file(GLOB_RECURSE srcs
-	${CMAKE_CURRENT_LIST_DIR}/Sample/*.h
-	${CMAKE_CURRENT_LIST_DIR}/Sample/*.hpp
- 	${CMAKE_CURRENT_LIST_DIR}/Sample/*.cpp
-)
-
-target_sources(Sample
-PRIVATE
- 	${srcs}
-)
-
-source_group(TREE ${CMAKE_CURRENT_LIST_DIR}/Sample FILES ${srcs})
-
-# 7、Link
-target_link_libraries(Sample
-PRIVATE
-	Magic
-)
-
-# 8、Startup Project
+# 5、Startup Project
 set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT Sample)
