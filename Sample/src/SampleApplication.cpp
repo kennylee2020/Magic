@@ -12,6 +12,6 @@ namespace Sample {
 	}
 }
 
-Magic::Application* Magic::CreateApplication() {
+Magic::Application* Magic::createApplication() {
 	return new Sample::SampleApplication();
 }

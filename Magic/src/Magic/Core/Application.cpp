@@ -5,6 +5,8 @@
 #include "Magic/Event/Event.h"
 #include "Magic/Core/Application.h"
 
+#include "Magic/Graphics/Buffer.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -25,7 +27,7 @@ namespace Magic {
 	Application::Application()
 	{
 		MAG_INFO_CORE("Magic start!");
-		m_Window = Window::Create({ "Magic", 640, 480 });
+		m_Window = Window::create({ "Magic", 640, 480 });
 		m_Window->setWindowEventCallback(BIND_EVENT_CALLBACK(Application::onEvent));
 	}
 
@@ -122,11 +124,13 @@ namespace Magic {
 			{   0.f,  0.6f, 0.f, 0.f, 1.f }
 		};
 
+		unsigned int indices[3] = {0, 1, 2};
+
 		static const char* vertex_shader_text =
-			"#version 110\n"
+			"#version 330 core\n"
 			"uniform mat4 MVP;\n"
-			"attribute vec3 vCol;\n"
-			"attribute vec2 vPos;\n"
+			"layout(location = 0) in vec2 vPos;\n"
+			"layout(location = 1) in vec3 vCol;\n"
 			"varying vec3 color;\n"
 			"void main()\n"
 			"{\n"
@@ -135,7 +139,7 @@ namespace Magic {
 			"}\n";
 
 		static const char* fragment_shader_text =
-			"#version 110\n"
+			"#version 330 core\n"
 			"varying vec3 color;\n"
 			"void main()\n"
 			"{\n"
@@ -147,11 +151,8 @@ namespace Magic {
 		gladLoadGL();
 		glfwSwapInterval(1);
 
-		GLuint vertex_buffer, vertex_shader, fragment_shader, program;
+		GLuint vertex_shader, fragment_shader, program;
 		GLint mvp_location, vpos_location, vcol_location;
-		glGenBuffers(1, &vertex_buffer);
-		glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 		vertex_shader = glCreateShader(GL_VERTEX_SHADER);
 		glShaderSource(vertex_shader, 1, &vertex_shader_text, NULL);
@@ -170,12 +171,17 @@ namespace Magic {
 		vpos_location = glGetAttribLocation(program, "vPos");
 		vcol_location = glGetAttribLocation(program, "vCol");
 
-		glEnableVertexAttribArray(vpos_location);
-		glVertexAttribPointer(vpos_location, 2, GL_FLOAT, GL_FALSE,
-			sizeof(vertices[0]), (void*)0);
-		glEnableVertexAttribArray(vcol_location);
-		glVertexAttribPointer(vcol_location, 3, GL_FLOAT, GL_FALSE,
-			sizeof(vertices[0]), (void*)(sizeof(float) * 2));
+		BufferLayout layout{
+			{"vPos", ShaderDataType::Float2, 0},
+			{"vCol", ShaderDataType::Float3, 0},
+		};
+		std::shared_ptr<Buffer> buffer = Buffer::create(layout);
+		buffer->setBufferData(sizeof(vertices), vertices);
+		buffer->bind();
+
+		std::shared_ptr<IndexBuffer> indexBuffer = IndexBuffer::create();
+		indexBuffer->setBufferData(3, indices);
+		indexBuffer->bind();
 
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO();
@@ -210,7 +216,7 @@ namespace Magic {
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			glUseProgram(program);
-			//glDrawArrays(GL_TRIANGLES, 0, 3);
+			glDrawElements(GL_TRIANGLES, indexBuffer->getCount(), GL_UNSIGNED_INT, nullptr);
 
 			float Translate = 0;
 			glm::vec2 Rotate(0, 0);

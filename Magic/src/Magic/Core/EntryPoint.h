@@ -5,7 +5,7 @@ int main(int argc, char** argv)
 {
 	Magic::Log::Init();
 
-	Magic::Application* app = Magic::CreateApplication();
+	Magic::Application* app = Magic::createApplication();
 	app->run();
 	delete app;
 	return 0;

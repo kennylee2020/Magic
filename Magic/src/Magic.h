@@ -7,3 +7,5 @@
 #include "Magic/Event/MouseEvent.h"
 #include "Magic/Event/KeyEvent.h"
 #include "Magic/Event/WindowEvent.h"
+
+#include "Magic/Graphics/Buffer.h"

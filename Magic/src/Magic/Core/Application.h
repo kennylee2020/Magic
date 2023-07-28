@@ -33,5 +33,5 @@ namespace Magic {
 		friend int ::main(int argc, char** argv);
 	};
 
-	Application* CreateApplication();
+	Application* createApplication();
 }

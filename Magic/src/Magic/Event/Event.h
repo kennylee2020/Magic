@@ -47,13 +47,15 @@ namespace Magic {
 		Event& m_Event;
 	};
 
-	//inline std::ostream& operator<<(std::ostream& os, const Event& e)
+	//std::ostream& operator<<(std::ostream& os, const Magic::Event& e)
 	//{
 	//	return os << e.toString();
-	//}
+	//};
 
 #define EVENT_CREATE_CLASS_CATEGORY(category) virtual int getCategoryFlags() const override {return category;}
 #define EVENT_CREATE_CLASS_TYPE(type) static EventType getStaticType() {return type;}\
 									  virtual EventType getType() const override {return getStaticType();}\
 									  virtual std::string getName() const override {return #type;}
-}
+};
+
+
