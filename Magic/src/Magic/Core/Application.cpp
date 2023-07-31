@@ -117,11 +117,12 @@ namespace Magic {
 		{
 			float x, y;
 			float r, g, b;
+			float u,v;
 		}vertices[3] =
 		{
-			{ -0.6f, -0.4f, 1.f, 0.f, 0.f },
-			{  0.6f, -0.4f, 0.f, 1.f, 0.f },
-			{   0.f,  0.6f, 0.f, 0.f, 1.f }
+			{ -0.6f, -0.4f, 1.f, 0.f, 0.f, 0.f, 0.f },
+			{  0.6f, -0.4f, 0.f, 1.f, 0.f, 1.f, 0.f },
+			{   0.f,  0.6f, 0.f, 0.f, 1.f, 0.5f,1.f }
 		};
 
 		unsigned int indices[3] = {0, 1, 2};
@@ -133,14 +134,12 @@ namespace Magic {
 
 		GLint mvp_location, vpos_location, vcol_location;
 
-		//mvp_location = glGetUniformLocation(program, "MVP");
-		//vpos_location = glGetAttribLocation(program, "vPos");
-		//vcol_location = glGetAttribLocation(program, "vCol");
 		m_PureColorShader = Shader::Create("assets/shader/pure_color.glsl");
 
 		BufferLayout layout{
 			{"vPos", ShaderDataType::Float2, 0},
 			{"vCol", ShaderDataType::Float3, 0},
+			{"vUV",  ShaderDataType::Float2, 0},
 		};
 		std::shared_ptr<Buffer> buffer = Buffer::Create(layout);
 		buffer->SetBufferData(sizeof(vertices), vertices);
@@ -162,14 +161,11 @@ namespace Magic {
 		gladLoadGL();
 		glfwSwapInterval(1);
 
-		int width,height,channel;
-		stbi_uc* data = stbi_load("assets/image/test_img.jpg",&width,&height,&channel,3);
-		if(data){
-			MAG_CORE_INFO("Load Successed!");
-		}else {
-			MAG_CORE_INFO("Load Failed!");
-		}
-		stbi_image_free(data);
+		m_PureColorShader->Bind();
+		m_PureColorShader->SetInt("u_Texture", 0);
+
+		m_Texture = Texture2D::Create("assets/image/test_img.jpg");
+		m_Texture->Bind(0);
 
 		while (!glfwWindowShouldClose(window))
 		{

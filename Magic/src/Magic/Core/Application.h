@@ -4,6 +4,7 @@
 #include "Magic/Event/MouseEvent.h"
 #include "Magic/Event/WindowEvent.h"
 #include "Magic/Graphics/Shader.h"
+#include "Magic/Graphics/Texture.h"
 
 int main(int argc, char** argv);
 
@@ -29,6 +30,7 @@ namespace Magic {
 		bool onKeyTypedEvent(KeyTypedEvent& event);
 	private:
 		std::shared_ptr<Window> m_Window;
+		std::shared_ptr<Texture> m_Texture;
 		std::shared_ptr<Shader> m_PureColorShader;
 	private:
 		friend int ::main(int argc, char** argv);

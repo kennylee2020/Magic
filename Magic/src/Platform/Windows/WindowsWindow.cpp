@@ -35,7 +35,7 @@ namespace Magic {
 	static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 	{
 		Application* app = (Application*)glfwGetWindowUserPointer(window);
-		app->OnEvent(MouseScrollEvent(xoffset, yoffset));
+		app->OnEvent(MouseScrollEvent((float)xoffset, (float)yoffset));
 	}
 
 	static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
@@ -51,7 +51,7 @@ namespace Magic {
 	static void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos)
 	{
 		Application* app = (Application*)glfwGetWindowUserPointer(window);
-		app->OnEvent(MouseMoveEvent(xpos, ypos));
+		app->OnEvent(MouseMoveEvent((float)xpos, (float)ypos));
 	}
 
 	static void window_close_callback(GLFWwindow* window)

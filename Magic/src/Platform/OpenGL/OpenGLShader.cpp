@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <glad/glad.h>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace Magic {
 	static Shader::ShaderType StringToShaderType(std::string shaderTypeString) {
@@ -39,6 +40,48 @@ namespace Magic {
 		glUseProgram(0);
 	}
 
+	void OpenGLShader::SetInt(std::string name, int value) const
+	{
+		GLint location = glGetUniformLocation(m_RenderId, name.c_str());
+		glUniform1i(location, value);
+	}
+
+	void OpenGLShader::SetFloat(std::string name, float value) const
+	{
+		GLint location = glGetUniformLocation(m_RenderId, name.c_str());
+		glUniform1f(location, value);
+	}
+
+	void OpenGLShader::SetFloat2(std::string name, const glm::vec2& value) const
+	{
+		GLint location = glGetUniformLocation(m_RenderId, name.c_str());
+		glUniform2f(location, value.x, value.y);
+	}
+
+	void OpenGLShader::SetFloat3(std::string name, const glm::vec3& value) const
+	{
+		GLint location = glGetUniformLocation(m_RenderId, name.c_str());
+		glUniform3f(location, value.x, value.y, value.z);
+	}
+
+	void OpenGLShader::SetFloat4(std::string name, const glm::vec4& value) const
+	{
+		GLint location = glGetUniformLocation(m_RenderId, name.c_str());
+		glUniform4f(location, value.x, value.y, value.z, value.w);
+	}
+
+	void OpenGLShader::SetMatrix3x3(std::string name, const glm::mat3x3& value) const
+	{
+		GLint location = glGetUniformLocation(m_RenderId, name.c_str());
+		glUniformMatrix3fv(location, 1, false, glm::value_ptr(value));
+	}
+
+	void OpenGLShader::SetMatrix4x4(std::string name, const glm::mat4x4& value) const
+	{
+		GLint location = glGetUniformLocation(m_RenderId, name.c_str());
+		glUniformMatrix4fv(location, 1, false, glm::value_ptr(value));
+	}
+
 	std::string OpenGLShader::loadShaderFile(const std::string& filePath) const{
 		std::string result;
 		std::ifstream in(filePath, std::ios_base::in | std::ios_base::binary);
@@ -62,7 +105,7 @@ namespace Magic {
 
 	std::vector<OpenGLShader::ShaderDescriptor> OpenGLShader::parseShaderText(const std::string& shaderText) const{
 		static const std::string programToken = "#program";
-		static const int tokenSize = programToken.size();
+		static const size_t tokenSize = programToken.size();
 		
 		std::vector<OpenGLShader::ShaderDescriptor> shaderDescriptors;
 		size_t tokenStart = shaderText.find(programToken);
