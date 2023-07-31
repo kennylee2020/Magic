@@ -18,8 +18,8 @@ namespace Magic{
 	{
 	public:
 		WindowResizeEvent(int width, int height) : m_Width(width),m_Height(height){}
-		int getWidth() const { return m_Width;}
-		int getHeight() const {return m_Height;}
+		int GetWidth() const { return m_Width;}
+		int GetHeight() const {return m_Height;}
 
 		EVENT_CREATE_CLASS_TYPE(EventType::WindowResize)
 	private:

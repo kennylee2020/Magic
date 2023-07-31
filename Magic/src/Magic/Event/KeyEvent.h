@@ -4,7 +4,7 @@
 namespace Magic {
 	class KeyEvent : public Event {
 	public:
-		virtual int getKeycode() const { return m_Keycode;}
+		virtual int GetKeycode() const { return m_Keycode;}
 		EVENT_CREATE_CLASS_CATEGORY(EventCategory::Input | EventCategory::Key)
 	protected:
 		KeyEvent(int keycode) : m_Keycode(keycode){}
@@ -15,7 +15,7 @@ namespace Magic {
 	class KeyDownEvent : public KeyEvent {
 	public:
 		KeyDownEvent(int keycode,int repeat) : KeyEvent(keycode), m_Repeat(repeat){}
-		bool isRepeat(){ return m_Repeat; }
+		bool IsRepeat(){ return m_Repeat; }
 
 		EVENT_CREATE_CLASS_TYPE(EventType::KeyDown)
 	private:

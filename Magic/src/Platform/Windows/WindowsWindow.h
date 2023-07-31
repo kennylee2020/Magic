@@ -16,11 +16,11 @@ namespace Magic {
 		WindowsWindow(const WindowDesc& windowDesc);
 		~WindowsWindow();
 
-		virtual int getWidth() const override { return m_Data.width;}
-		virtual int getHeight() const override {return m_Data.height;}
-		virtual void onUpdate() override;
-		virtual void* getNativeWindow() override;
-		virtual void setWindowEventCallback(const WindowEventFunc& callback) override;
+		virtual int GetWidth() const override { return m_Data.width;}
+		virtual int GetHeight() const override {return m_Data.height;}
+		virtual void OnUpdate() override;
+		virtual void* GetNativeWindow() override;
+		virtual void SetWindowEventCallback(const WindowEventFunc& callback) override;
 	private:
 		void init(const WindowData& windowData);
 		void shutdow();

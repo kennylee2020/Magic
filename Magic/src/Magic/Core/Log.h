@@ -15,10 +15,10 @@ namespace Magic {
 }
 
 //////////////////////////Log Macro///////////////////////////
-#define MAG_INFO_CORE(...)		Log::GetCoreLogger()->info(__VA_ARGS__)
-#define MAG_WARN_CORE(...)		Log::GetCoreLogger()->warn(__VA_ARGS__)
-#define MAG_ERROR_CORE(...)		Log::GetCoreLogger()->error(__VA_ARGS__)
-#define MAG_CRITICAL_CORE(...)	Log::GetCoreLogger()->critical(__VA_ARGS__)
+#define MAG_CORE_INFO(...)		Log::GetCoreLogger()->info(__VA_ARGS__)
+#define MAG_CORE_WARN(...)		Log::GetCoreLogger()->warn(__VA_ARGS__)
+#define MAG_CORE_ERROR(...)		Log::GetCoreLogger()->error(__VA_ARGS__)
+#define MAG_CORE_CRITICAL(...)	Log::GetCoreLogger()->critical(__VA_ARGS__)
 
 #define MAG_INFO(...)			Log::GetClientLogger()->info(__VA_ARGS__)
 #define MAG_WARN(...)			Log::GetClientLogger()->warn(__VA_ARGS__)

@@ -7,8 +7,8 @@ namespace Magic {
 	public:
 		MouseMoveEvent(const float x, const float y) : m_MouseX(x), m_MouseY(y){}
 
-		float getX() const { return m_MouseX; }
-		float getY() const { return m_MouseY; }
+		float GetX() const { return m_MouseX; }
+		float GetY() const { return m_MouseY; }
 
 		EVENT_CREATE_CLASS_CATEGORY(EventCategory::Input | EventCategory::Mouse)
 		EVENT_CREATE_CLASS_TYPE(EventType::MouseMove)
@@ -20,8 +20,8 @@ namespace Magic {
 	{
 	public:
 		MouseScrollEvent(const float x, const float y) : m_DeltaX(x), m_DeltaY(y) {}
-		float getDeltaX() const { return m_DeltaX; }
-		float getDeltaY() const { return m_DeltaY; }
+		float GetDeltaX() const { return m_DeltaX; }
+		float GetDeltaY() const { return m_DeltaY; }
 
 		EVENT_CREATE_CLASS_CATEGORY(EventCategory::Input | EventCategory::Mouse)
 		EVENT_CREATE_CLASS_TYPE(EventType::MouseScroll)
@@ -32,7 +32,7 @@ namespace Magic {
 	class MouseButtonEvent : public Event
 	{
 	public:
-		virtual int getButton() const { return m_Button; }
+		virtual int GetButton() const { return m_Button; }
 
 		EVENT_CREATE_CLASS_CATEGORY(EventCategory::Input | EventCategory::Mouse | EventCategory::MouseButton)
 	protected:

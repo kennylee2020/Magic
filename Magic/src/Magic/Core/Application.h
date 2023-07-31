@@ -1,9 +1,9 @@
 #pragma once
-#include "magicpch.h"
 #include "Window.h"
 #include "Magic/Event/KeyEvent.h"
 #include "Magic/Event/MouseEvent.h"
 #include "Magic/Event/WindowEvent.h"
+#include "Magic/Graphics/Shader.h"
 
 int main(int argc, char** argv);
 
@@ -13,7 +13,7 @@ namespace Magic {
 	public:
 		Application();
 		~Application() = default;
-		bool onEvent(Event& event);
+		bool OnEvent(Event& event);
 	private:
 		void run();
 		bool onWindowCloseEvent(WindowCloseEvent& event);
@@ -29,9 +29,10 @@ namespace Magic {
 		bool onKeyTypedEvent(KeyTypedEvent& event);
 	private:
 		std::shared_ptr<Window> m_Window;
+		std::shared_ptr<Shader> m_PureColorShader;
 	private:
 		friend int ::main(int argc, char** argv);
 	};
 
-	Application* createApplication();
+	Application* CreateApplication();
 }

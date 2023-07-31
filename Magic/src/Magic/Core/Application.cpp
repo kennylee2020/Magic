@@ -26,26 +26,26 @@
 namespace Magic {
 	Application::Application()
 	{
-		MAG_INFO_CORE("Magic start!");
-		m_Window = Window::create({ "Magic", 640, 480 });
-		m_Window->setWindowEventCallback(BIND_EVENT_CALLBACK(Application::onEvent));
+		MAG_CORE_INFO("Magic start!");
+		m_Window = Window::Create({ "Magic", 640, 480 });
+		m_Window->SetWindowEventCallback(BIND_EVENT_CALLBACK(Application::OnEvent));
 	}
 
-	bool Application::onEvent(Event& event) {
+	bool Application::OnEvent(Event& event) {
 		EventDispatcher dispatcher(event);
-		dispatcher.dispath<WindowCloseEvent>(BIND_EVENT_CALLBACK(Application::onWindowCloseEvent));
-		dispatcher.dispath<WindowResizeEvent>(BIND_EVENT_CALLBACK(Application::onWindowResizeEvent));
-		dispatcher.dispath<WindowFocusEvent>(BIND_EVENT_CALLBACK(Application::onWindowFocusEvent));
-		dispatcher.dispath<WindowLostFocus>(BIND_EVENT_CALLBACK(Application::onWindowLostFocusEvent));
+		dispatcher.Dispath<WindowCloseEvent>(BIND_EVENT_CALLBACK(Application::onWindowCloseEvent));
+		dispatcher.Dispath<WindowResizeEvent>(BIND_EVENT_CALLBACK(Application::onWindowResizeEvent));
+		dispatcher.Dispath<WindowFocusEvent>(BIND_EVENT_CALLBACK(Application::onWindowFocusEvent));
+		dispatcher.Dispath<WindowLostFocus>(BIND_EVENT_CALLBACK(Application::onWindowLostFocusEvent));
 
-		dispatcher.dispath<MouseButtonDownEvent>(BIND_EVENT_CALLBACK(Application::onMouseButtonDownEvent));
-		dispatcher.dispath<MouseButtonUpEvent>(BIND_EVENT_CALLBACK(Application::onMouseButtonUpEvent));
-		dispatcher.dispath<MouseScrollEvent>(BIND_EVENT_CALLBACK(Application::onMouseScrollEvent));
-		dispatcher.dispath<MouseMoveEvent>(BIND_EVENT_CALLBACK(Application::onMouseMoveEvent));
+		dispatcher.Dispath<MouseButtonDownEvent>(BIND_EVENT_CALLBACK(Application::onMouseButtonDownEvent));
+		dispatcher.Dispath<MouseButtonUpEvent>(BIND_EVENT_CALLBACK(Application::onMouseButtonUpEvent));
+		dispatcher.Dispath<MouseScrollEvent>(BIND_EVENT_CALLBACK(Application::onMouseScrollEvent));
+		dispatcher.Dispath<MouseMoveEvent>(BIND_EVENT_CALLBACK(Application::onMouseMoveEvent));
 
-		dispatcher.dispath<KeyDownEvent>(BIND_EVENT_CALLBACK(Application::onKeyDownEvent));
-		dispatcher.dispath<KeyUpEvent>(BIND_EVENT_CALLBACK(Application::onKeyUpEvent));
-		dispatcher.dispath<KeyTypedEvent>(BIND_EVENT_CALLBACK(Application::onKeyTypedEvent));
+		dispatcher.Dispath<KeyDownEvent>(BIND_EVENT_CALLBACK(Application::onKeyDownEvent));
+		dispatcher.Dispath<KeyUpEvent>(BIND_EVENT_CALLBACK(Application::onKeyUpEvent));
+		dispatcher.Dispath<KeyTypedEvent>(BIND_EVENT_CALLBACK(Application::onKeyTypedEvent));
 		return true;
 	}
 
@@ -107,7 +107,7 @@ namespace Magic {
 
 	bool Application::onKeyTypedEvent(KeyTypedEvent& event)
 	{
-		MAG_INFO("onKeyTypedEvent {0}", event.getKeycode());
+		MAG_INFO("onKeyTypedEvent {0}", event.GetKeycode());
 		return true;
 	}
 
@@ -126,62 +126,29 @@ namespace Magic {
 
 		unsigned int indices[3] = {0, 1, 2};
 
-		static const char* vertex_shader_text =
-			"#version 330 core\n"
-			"uniform mat4 MVP;\n"
-			"layout(location = 0) in vec2 vPos;\n"
-			"layout(location = 1) in vec3 vCol;\n"
-			"varying vec3 color;\n"
-			"void main()\n"
-			"{\n"
-			"    gl_Position = vec4(vPos, 0.0, 1.0);\n"
-			"    color = vCol;\n"
-			"}\n";
-
-		static const char* fragment_shader_text =
-			"#version 330 core\n"
-			"varying vec3 color;\n"
-			"void main()\n"
-			"{\n"
-			"    gl_FragColor = vec4(color, 1.0);\n"
-			"}\n";
-
-		GLFWwindow* window = (GLFWwindow*)m_Window->getNativeWindow();
+		GLFWwindow* window = (GLFWwindow*)m_Window->GetNativeWindow();
 		glfwMakeContextCurrent(window);
 		gladLoadGL();
 		glfwSwapInterval(1);
 
-		GLuint vertex_shader, fragment_shader, program;
 		GLint mvp_location, vpos_location, vcol_location;
 
-		vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-		glShaderSource(vertex_shader, 1, &vertex_shader_text, NULL);
-		glCompileShader(vertex_shader);
-
-		fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-		glShaderSource(fragment_shader, 1, &fragment_shader_text, NULL);
-		glCompileShader(fragment_shader);
-
-		program = glCreateProgram();
-		glAttachShader(program, vertex_shader);
-		glAttachShader(program, fragment_shader);
-		glLinkProgram(program);
-
-		mvp_location = glGetUniformLocation(program, "MVP");
-		vpos_location = glGetAttribLocation(program, "vPos");
-		vcol_location = glGetAttribLocation(program, "vCol");
+		//mvp_location = glGetUniformLocation(program, "MVP");
+		//vpos_location = glGetAttribLocation(program, "vPos");
+		//vcol_location = glGetAttribLocation(program, "vCol");
+		m_PureColorShader = Shader::Create("assets/shader/pure_color.glsl");
 
 		BufferLayout layout{
 			{"vPos", ShaderDataType::Float2, 0},
 			{"vCol", ShaderDataType::Float3, 0},
 		};
-		std::shared_ptr<Buffer> buffer = Buffer::create(layout);
-		buffer->setBufferData(sizeof(vertices), vertices);
-		buffer->bind();
+		std::shared_ptr<Buffer> buffer = Buffer::Create(layout);
+		buffer->SetBufferData(sizeof(vertices), vertices);
+		buffer->Bind();
 
-		std::shared_ptr<IndexBuffer> indexBuffer = IndexBuffer::create();
-		indexBuffer->setBufferData(3, indices);
-		indexBuffer->bind();
+		std::shared_ptr<IndexBuffer> indexBuffer = IndexBuffer::Create();
+		indexBuffer->SetBufferData(3, indices);
+		indexBuffer->Bind();
 
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO();
@@ -198,9 +165,9 @@ namespace Magic {
 		int width,height,channel;
 		stbi_uc* data = stbi_load("assets/image/test_img.jpg",&width,&height,&channel,3);
 		if(data){
-			MAG_INFO_CORE("Load Successed!");
+			MAG_CORE_INFO("Load Successed!");
 		}else {
-			MAG_INFO_CORE("Load Failed!");
+			MAG_CORE_INFO("Load Failed!");
 		}
 		stbi_image_free(data);
 
@@ -214,9 +181,9 @@ namespace Magic {
 
 			glViewport(0, 0, width, height);
 			glClear(GL_COLOR_BUFFER_BIT);
-
-			glUseProgram(program);
-			glDrawElements(GL_TRIANGLES, indexBuffer->getCount(), GL_UNSIGNED_INT, nullptr);
+			
+			m_PureColorShader->Bind();
+			glDrawElements(GL_TRIANGLES, indexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
 
 			float Translate = 0;
 			glm::vec2 Rotate(0, 0);
@@ -239,7 +206,7 @@ namespace Magic {
 			ImGui::Render();
 			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-			m_Window->onUpdate();
+			m_Window->OnUpdate();
 		}
 
 		ImGui_ImplOpenGL3_Shutdown();

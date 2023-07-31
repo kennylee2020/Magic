@@ -1,5 +1,4 @@
 #pragma once
-#include "magicpch.h"
 
 namespace Magic {
 	enum class ShaderDataType {
@@ -20,7 +19,7 @@ namespace Magic {
 		case Magic::ShaderDataType::Float3:	return 4 * 3;
 		case Magic::ShaderDataType::Float4:	return 4 * 4;
 		}
-		MAG_ERROR_CORE("Unknown ShaderDataType {0}", 0);
+		MAG_CORE_ERROR("Unknown ShaderDataType {0}", 0);
 	}
 
 	static int shaderDataType2Dimension(const ShaderDataType type) {
@@ -37,7 +36,7 @@ namespace Magic {
 		case Magic::ShaderDataType::Float3:	return 3;
 		case Magic::ShaderDataType::Float4:	return 4;
 		}
-		MAG_ERROR_CORE("Unknown ShaderDataType {0}", 0);
+		MAG_CORE_ERROR("Unknown ShaderDataType {0}", 0);
 	}
 
 	class BufferLayout {
@@ -80,11 +79,11 @@ namespace Magic {
 	{
 	public:
 		Buffer(const BufferLayout& layout) {};
-		virtual void bind() const = 0;
-		virtual void unbind() const = 0;
-		virtual void setBufferData(unsigned int size, const void* data) = 0;
+		virtual void Bind() const = 0;
+		virtual void Unbind() const = 0;
+		virtual void SetBufferData(unsigned int size, const void* data) = 0;
 
-		static std::shared_ptr<Buffer> create(const BufferLayout& layout);
+		static std::shared_ptr<Buffer> Create(const BufferLayout& layout);
 	protected:
 		Buffer() = default;
 	};
@@ -93,11 +92,11 @@ namespace Magic {
 	{
 	public:
 		IndexBuffer() = default;
-		virtual void bind() const = 0;
-		virtual void unbind() const = 0;
-		virtual int getCount() const = 0;
-		virtual void setBufferData(unsigned int count, const unsigned int* data) = 0;
+		virtual void Bind() const = 0;
+		virtual void Unbind() const = 0;
+		virtual int GetCount() const = 0;
+		virtual void SetBufferData(unsigned int count, const unsigned int* data) = 0;
 
-		static std::shared_ptr<IndexBuffer> create();
+		static std::shared_ptr<IndexBuffer> Create();
 	};
 }

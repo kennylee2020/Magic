@@ -1,5 +1,5 @@
 #pragma once
-#include "magicpch.h"
+#include "Magic/Core/Base.h"
 
 namespace Magic {
 	class Event
@@ -22,12 +22,12 @@ namespace Magic {
 			Key =			BIT(5),
 		};
 	public:
-		bool handled = false;
-		virtual EventType getType() const = 0;
-		virtual int getCategoryFlags() const = 0;
-		virtual std::string getName() const = 0;
-		virtual std::string toString() const { return getName(); }
-		virtual bool isInCategory(EventCategory category){ return getCategoryFlags() & category; }
+		bool Handled = false;
+		virtual EventType GetType() const = 0;
+		virtual int GetCategoryFlags() const = 0;
+		virtual std::string GetName() const = 0;
+		virtual std::string ToString() const { return GetName(); }
+		virtual bool IsInCategory(EventCategory category){ return GetCategoryFlags() & category; }
 		virtual ~Event() = default;
 	};
 
@@ -36,9 +36,9 @@ namespace Magic {
 		EventDispatcher(Event& event) : m_Event(event){}
 
 		template<typename T, typename F>
-		bool dispath(const F& func) {
-			if (m_Event.getType() == T::getStaticType()) {
-				m_Event.handled |= func(static_cast<T&>(m_Event));
+		bool Dispath(const F& func) {
+			if (m_Event.GetType() == T::getStaticType()) {
+				m_Event.Handled |= func(static_cast<T&>(m_Event));
 				return true;
 			}
 			return false;
@@ -52,10 +52,10 @@ namespace Magic {
 	//	return os << e.toString();
 	//};
 
-#define EVENT_CREATE_CLASS_CATEGORY(category) virtual int getCategoryFlags() const override {return category;}
+#define EVENT_CREATE_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override {return category;}
 #define EVENT_CREATE_CLASS_TYPE(type) static EventType getStaticType() {return type;}\
-									  virtual EventType getType() const override {return getStaticType();}\
-									  virtual std::string getName() const override {return #type;}
+									  virtual EventType GetType() const override {return getStaticType();}\
+									  virtual std::string GetName() const override {return #type;}
 };
 
 

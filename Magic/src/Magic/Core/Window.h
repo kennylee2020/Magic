@@ -15,12 +15,12 @@ namespace Magic {
 		};
 		typedef std::function<bool(Event& e)> WindowEventFunc;
 	public:
-		virtual int getWidth() const = 0;
-		virtual int getHeight() const = 0;
-		virtual void onUpdate() = 0;
-		virtual void* getNativeWindow() = 0;
-		virtual void setWindowEventCallback(const WindowEventFunc& callback) = 0;
+		virtual int GetWidth() const = 0;
+		virtual int GetHeight() const = 0;
+		virtual void OnUpdate() = 0;
+		virtual void* GetNativeWindow() = 0;
+		virtual void SetWindowEventCallback(const WindowEventFunc& callback) = 0;
 
-		static std::shared_ptr<Window> create(const WindowDesc& windowDesc);
+		static std::shared_ptr<Window> Create(const WindowDesc& windowDesc);
 	};
 }

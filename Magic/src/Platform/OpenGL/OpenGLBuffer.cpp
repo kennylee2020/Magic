@@ -17,7 +17,7 @@ namespace Magic {
 		case Magic::ShaderDataType::Float3:	return GL_FLOAT;
 		case Magic::ShaderDataType::Float4:	return GL_FLOAT;
 		}
-		MAG_ERROR_CORE("Unknown ShaderDataType {0}", 0);
+		MAG_CORE_ERROR("Unknown ShaderDataType {0}", 0);
 	}
 	
 	/// <summary>
@@ -27,17 +27,17 @@ namespace Magic {
 		glGenBuffers(1, &m_RendererId);
 	}
 
-	void OpenGLBuffer::bind() const
+	void OpenGLBuffer::Bind() const
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererId);
 	}
 
-	void OpenGLBuffer::unbind() const
+	void OpenGLBuffer::Unbind() const
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
-	void OpenGLBuffer::setBufferData(unsigned int size, const void* data)
+	void OpenGLBuffer::SetBufferData(unsigned int size, const void* data)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererId);
 		glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
@@ -63,22 +63,22 @@ namespace Magic {
 		glGenBuffers(1, &m_RendererId);
 	}
 
-	void OpenGLIndexBuffer::bind() const
+	void OpenGLIndexBuffer::Bind() const
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererId);
 	}
 
-	void OpenGLIndexBuffer::unbind() const
+	void OpenGLIndexBuffer::Unbind() const
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
-	int OpenGLIndexBuffer::getCount() const
+	int OpenGLIndexBuffer::GetCount() const
 	{
 		return m_Count;
 	}
 
-	void OpenGLIndexBuffer::setBufferData(unsigned int count, const unsigned int* data)
+	void OpenGLIndexBuffer::SetBufferData(unsigned int count, const unsigned int* data)
 	{
 		m_Count = count;
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererId);
