@@ -1,5 +1,6 @@
 #pragma once
 #include "Window.h"
+#include "Magic/Core/Layer.h"
 #include "Magic/Event/KeyEvent.h"
 #include "Magic/Event/MouseEvent.h"
 #include "Magic/Event/WindowEvent.h"
@@ -14,6 +15,7 @@ namespace Magic {
 	public:
 		Application();
 		~Application() = default;
+		void PushLayer(Layer* layer);
 		bool OnEvent(Event& event);
 	private:
 		void run();
@@ -29,9 +31,9 @@ namespace Magic {
 		bool onKeyUpEvent(KeyUpEvent& event);
 		bool onKeyTypedEvent(KeyTypedEvent& event);
 	private:
+		bool m_IsRunning;
+		LayerStack m_LayerStack;
 		std::shared_ptr<Window> m_Window;
-		std::shared_ptr<Texture> m_Texture;
-		std::shared_ptr<Shader> m_PureColorShader;
 	private:
 		friend int ::main(int argc, char** argv);
 	};

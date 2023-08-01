@@ -15,64 +15,64 @@ namespace Magic {
 		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 			glfwSetWindowShouldClose(window, GLFW_TRUE);
 		if (action == GLFW_PRESS) {
-			Application* app = (Application*)glfwGetWindowUserPointer(window);
-			app->OnEvent(KeyDownEvent(key, 0));
+			WindowsWindow::WindowData& data = *(WindowsWindow::WindowData*)glfwGetWindowUserPointer(window);
+			data.windowEvent(KeyDownEvent(key, 0));
 		}else if (action == GLFW_RELEASE) {
-			Application* app = (Application*)glfwGetWindowUserPointer(window);
-			app->OnEvent(KeyUpEvent(key));
+			WindowsWindow::WindowData& data = *(WindowsWindow::WindowData*)glfwGetWindowUserPointer(window);
+			data.windowEvent(KeyUpEvent(key));
 		}else if (action == GLFW_REPEAT) {
-			Application* app = (Application*)glfwGetWindowUserPointer(window);
-			app->OnEvent(KeyDownEvent(key, 1));
+			WindowsWindow::WindowData& data = *(WindowsWindow::WindowData*)glfwGetWindowUserPointer(window);
+			data.windowEvent(KeyDownEvent(key, 1));
 		}
 	}
 
 	static void char_callback(GLFWwindow* window, unsigned int keycode)
 	{	
-		Application* app = (Application*)glfwGetWindowUserPointer(window);
-		app->OnEvent(KeyTypedEvent(keycode));
+		WindowsWindow::WindowData& data = *(WindowsWindow::WindowData*)glfwGetWindowUserPointer(window);
+		data.windowEvent(KeyTypedEvent(keycode));
 	}
 
 	static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 	{
-		Application* app = (Application*)glfwGetWindowUserPointer(window);
-		app->OnEvent(MouseScrollEvent((float)xoffset, (float)yoffset));
+		WindowsWindow::WindowData& data = *(WindowsWindow::WindowData*)glfwGetWindowUserPointer(window);
+		data.windowEvent(MouseScrollEvent((float)xoffset, (float)yoffset));
 	}
 
 	static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 	{
-		Application* app = (Application*)glfwGetWindowUserPointer(window);
+		WindowsWindow::WindowData& data = *(WindowsWindow::WindowData*)glfwGetWindowUserPointer(window);
 		if (action == GLFW_PRESS) {
-			app->OnEvent(MouseButtonDownEvent(button));
+			data.windowEvent(MouseButtonDownEvent(button));
 		}else if(action == GLFW_RELEASE) {
-			app->OnEvent(MouseButtonUpEvent(button));
+			data.windowEvent(MouseButtonUpEvent(button));
 		}
 	}
 
 	static void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos)
 	{
-		Application* app = (Application*)glfwGetWindowUserPointer(window);
-		app->OnEvent(MouseMoveEvent((float)xpos, (float)ypos));
+		WindowsWindow::WindowData& data = *(WindowsWindow::WindowData*)glfwGetWindowUserPointer(window);
+		data.windowEvent(MouseMoveEvent((float)xpos, (float)ypos));
 	}
 
 	static void window_close_callback(GLFWwindow* window)
 	{
-		Application* app = (Application*)glfwGetWindowUserPointer(window);
-		app->OnEvent(WindowCloseEvent());
+		WindowsWindow::WindowData& data = *(WindowsWindow::WindowData*)glfwGetWindowUserPointer(window);
+		data.windowEvent(WindowCloseEvent());
 	}
 
 	static void window_size_callback(GLFWwindow* window, int width, int height)
 	{
-		Application* app = (Application*)glfwGetWindowUserPointer(window);
-		app->OnEvent(WindowResizeEvent(width, height));
+		WindowsWindow::WindowData& data = *(WindowsWindow::WindowData*)glfwGetWindowUserPointer(window);
+		data.windowEvent(WindowResizeEvent(width, height));
 	}
 
 	static void window_focus_callback(GLFWwindow* window, int focused)
 	{
-		Application* app = (Application*)glfwGetWindowUserPointer(window);
+		WindowsWindow::WindowData& data = *(WindowsWindow::WindowData*)glfwGetWindowUserPointer(window);
 		if(focused){
-			app->OnEvent(WindowFocusEvent());
+			data.windowEvent(WindowFocusEvent());
 		}else{
-			app->OnEvent(WindowLostFocus());
+			data.windowEvent(WindowLostFocus());
 		}
 	}
 
@@ -119,7 +119,7 @@ namespace Magic {
 		}
 
 		m_Window = window;
-		glfwSetWindowUserPointer(window, this);
+		glfwSetWindowUserPointer(window, &m_Data);
 		glfwSetKeyCallback(window, key_callback);
 		glfwSetCharCallback(window, char_callback);
 		glfwSetScrollCallback(window, scroll_callback);
