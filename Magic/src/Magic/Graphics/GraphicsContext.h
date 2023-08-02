@@ -7,6 +7,6 @@ namespace Magic {
 	public:
 		virtual void Init() = 0;
 	public:
-		static std::shared_ptr<GraphicsContext> Create();
+		static Ref<GraphicsContext> Create();
 	};
 }

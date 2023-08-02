@@ -20,7 +20,7 @@ namespace Magic {
 		Texture2D() = default;
 		~Texture2D() = default;
 	public:
-		static std::shared_ptr<Texture2D> Create(std::string filePath);
-		static std::shared_ptr<Texture2D> Create(int width, int height, uint8_t* data);
+		static Ref<Texture2D> Create(std::string filePath);
+		static Ref<Texture2D> Create(int width, int height, uint8_t* data);
 	};
 }

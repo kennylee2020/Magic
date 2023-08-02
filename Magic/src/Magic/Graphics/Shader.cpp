@@ -4,7 +4,7 @@
 #include "Platform/OpenGL/OpenGLShader.h"
 
 namespace Magic {
-	std::shared_ptr<Shader> Shader::Create(std::string filePath) {
-		return std::make_shared<OpenGLShader>(filePath);
+	Ref<Shader> Shader::Create(std::string filePath) {
+		return CreateRef<OpenGLShader>(filePath);
 	}
 }

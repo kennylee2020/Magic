@@ -3,7 +3,7 @@
 #include "Platform/OpenGL/OpenGLGraphicsContext.h"
 
 namespace Magic {
-	std::shared_ptr<GraphicsContext> GraphicsContext::Create() {
-		return std::make_shared<OpenGLGraphicsContext>();
+	Ref<GraphicsContext> GraphicsContext::Create() {
+		return CreateRef<OpenGLGraphicsContext>();
 	}
 }

@@ -24,6 +24,6 @@ namespace Magic {
 		virtual void SetMatrix3x3(std::string name, const glm::mat3x3& value) const = 0;
 		virtual void SetMatrix4x4(std::string name, const glm::mat4x4& value) const = 0;
 	public:
-		static std::shared_ptr<Shader> Create(std::string filePath);
+		static Ref<Shader> Create(std::string filePath);
 	};
 }

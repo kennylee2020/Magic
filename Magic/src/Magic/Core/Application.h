@@ -19,8 +19,8 @@ namespace Magic {
 		~Application() = default;
 		void PushLayer(Layer* layer);
 		bool OnEvent(Event& event);
-		std::shared_ptr<Window> GetWindow() const { return m_Window; }
-		std::shared_ptr<GraphicsContext> GetGraphicsContext() const { return m_GraphicsContext; }
+		Ref<Window> GetWindow() const { return m_Window; }
+		Ref<GraphicsContext> GetGraphicsContext() const { return m_GraphicsContext; }
 	public:
 		static inline Application* GetApplication() { return s_Instance; }
 	private:
@@ -38,8 +38,8 @@ namespace Magic {
 		bool onKeyTypedEvent(KeyTypedEvent& event);
 	private:
 		bool m_IsRunning;
-		std::shared_ptr<Window> m_Window;
-		std::shared_ptr<GraphicsContext> m_GraphicsContext;
+		Ref<Window> m_Window;
+		Ref<GraphicsContext> m_GraphicsContext;
 		LayerStack m_LayerStack;
 	private:
 		static Application* s_Instance;

@@ -22,6 +22,6 @@ namespace Magic {
 		virtual void* GetNativeWindow() = 0;
 		virtual void SetWindowEventCallback(const WindowEventFunc& callback) = 0;
 
-		static std::shared_ptr<Window> Create(const WindowDesc& windowDesc);
+		static Ref<Window> Create(const WindowDesc& windowDesc);
 	};
 }

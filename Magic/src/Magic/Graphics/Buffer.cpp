@@ -3,11 +3,11 @@
 #include "Platform/OpenGL/OpenGLBuffer.h"
 
 namespace Magic {
-	std::shared_ptr<Buffer> Buffer::Create(const BufferLayout& layout) {
-		return std::make_shared<OpenGLBuffer>(layout);
+	Ref<Buffer> Buffer::Create(const BufferLayout& layout) {
+		return CreateRef<OpenGLBuffer>(layout);
 	}
 
-	std::shared_ptr<IndexBuffer> IndexBuffer::Create() {
-		return std::make_shared<OpenGLIndexBuffer>();
+	Ref<IndexBuffer> IndexBuffer::Create() {
+		return CreateRef<OpenGLIndexBuffer>();
 	}
 }

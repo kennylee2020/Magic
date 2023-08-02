@@ -83,7 +83,7 @@ namespace Magic {
 		virtual void Unbind() const = 0;
 		virtual void SetBufferData(unsigned int size, const void* data) = 0;
 
-		static std::shared_ptr<Buffer> Create(const BufferLayout& layout);
+		static Ref<Buffer> Create(const BufferLayout& layout);
 	protected:
 		Buffer() = default;
 	};
@@ -97,6 +97,6 @@ namespace Magic {
 		virtual int GetCount() const = 0;
 		virtual void SetBufferData(unsigned int count, const unsigned int* data) = 0;
 
-		static std::shared_ptr<IndexBuffer> Create();
+		static Ref<IndexBuffer> Create();
 	};
 }
