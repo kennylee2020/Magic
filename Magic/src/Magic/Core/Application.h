@@ -4,6 +4,8 @@
 #include "Magic/Event/KeyEvent.h"
 #include "Magic/Event/MouseEvent.h"
 #include "Magic/Event/WindowEvent.h"
+
+#include "Magic/Graphics/GraphicsContext.h"
 #include "Magic/Graphics/Shader.h"
 #include "Magic/Graphics/Texture.h"
 
@@ -17,6 +19,10 @@ namespace Magic {
 		~Application() = default;
 		void PushLayer(Layer* layer);
 		bool OnEvent(Event& event);
+		std::shared_ptr<Window> GetWindow() const { return m_Window; }
+		std::shared_ptr<GraphicsContext> GetGraphicsContext() const { return m_GraphicsContext; }
+	public:
+		static inline Application* GetApplication() { return s_Instance; }
 	private:
 		void run();
 		bool onWindowCloseEvent(WindowCloseEvent& event);
@@ -32,8 +38,11 @@ namespace Magic {
 		bool onKeyTypedEvent(KeyTypedEvent& event);
 	private:
 		bool m_IsRunning;
-		LayerStack m_LayerStack;
 		std::shared_ptr<Window> m_Window;
+		std::shared_ptr<GraphicsContext> m_GraphicsContext;
+		LayerStack m_LayerStack;
+	private:
+		static Application* s_Instance;
 	private:
 		friend int ::main(int argc, char** argv);
 	};

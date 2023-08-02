@@ -1,44 +1,23 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
 #include "magicpch.h"
 #include "Magic/Event/Event.h"
 #include "Magic/Core/Application.h"
-
-#include "Magic/Graphics/Buffer.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-
-#include <imgui.h>
-#include <imgui_impl_opengl3.h>
-#include <imgui_impl_glfw.h>
-
-#include <glm/vec3.hpp>
-#include <glm/vec4.hpp>
-#include <glm/mat4x4.hpp> // glm::mat4
-#include <glm/ext/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale
-#include <glm/ext/matrix_clip_space.hpp> // glm::perspective
-#include <glm/ext/scalar_constants.hpp> // glm::pi
-
-#include <stb_image.h>
+#include "Magic/ImGui/ImGuiLayer.h"
 
 namespace Magic {
+	Application* Application::s_Instance = nullptr;
+
 	Application::Application()
 	{
 		MAG_CORE_INFO("Magic start!");
+		s_Instance = this;
 		m_IsRunning = true;
 		m_Window = Window::Create({ "Magic", 640, 480 });
 		m_Window->SetWindowEventCallback(BIND_EVENT_CALLBACK(Application::OnEvent));
+		
+		m_GraphicsContext = GraphicsContext::Create();
+		m_GraphicsContext->Init();
 
-		GLFWwindow* window = (GLFWwindow*)m_Window->GetNativeWindow();
-		glfwMakeContextCurrent(window);
-		gladLoadGL();
-		glfwSwapInterval(1);
-
-		glfwMakeContextCurrent(window);
-		gladLoadGL();
-		glfwSwapInterval(1);
+		PushLayer(new ImGuiLayer());
 	}
 
 	void Application::PushLayer(Layer* layer)
@@ -135,47 +114,19 @@ namespace Magic {
 
 	void Application::run()
 	{
-		GLFWwindow* window = (GLFWwindow*)m_Window->GetNativeWindow();
-
-		ImGui::CreateContext();
-		ImGuiIO& io = ImGui::GetIO();
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-		ImGui_ImplGlfw_InitForOpenGL(window, true);
-		ImGui_ImplOpenGL3_Init();
-	
 		while (m_IsRunning)
 		{
-			float ratio;
-			int width, height;
-
-			glfwGetFramebufferSize(window, &width, &height);
-			ratio = width / (float)height;
-
-			glViewport(0, 0, width, height);
-			glClear(GL_COLOR_BUFFER_BIT);
-			
 			for (Layer* layer : m_LayerStack) {
 				layer->OnUpdate();
 			}
 
-			ImGui_ImplOpenGL3_NewFrame();
-			ImGui_ImplGlfw_NewFrame();
-			ImGui::NewFrame();
-			////ImGui::ShowDemoWindow();
+			ImGuiLayer::BeginImGui();
 			for (Layer* layer : m_LayerStack) {
 				layer->OnImGui();
 			}
-			ImGui::Render();
-			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
+			ImGuiLayer::EndImGui();
+			
 			m_Window->OnUpdate();
 		}
-
-		ImGui_ImplOpenGL3_Shutdown();
-		ImGui_ImplGlfw_Shutdown();
-		ImGui::DestroyContext();
-	
-		exit(EXIT_SUCCESS);
 	}
 }

@@ -2,6 +2,13 @@
 #include <imgui.h>
 #include <glad/glad.h>
 
+#include <glm/vec3.hpp>
+#include <glm/vec4.hpp>
+#include <glm/mat4x4.hpp> // glm::mat4
+#include <glm/ext/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale
+#include <glm/ext/matrix_clip_space.hpp> // glm::perspective
+#include <glm/ext/scalar_constants.hpp> // glm::pi
+
 namespace Sample {
 	SampleLayer::SampleLayer() : Layer("SampleLayer"){
 		static const struct
@@ -41,6 +48,7 @@ namespace Sample {
 
 	void SampleLayer::OnUpdate()
 	{
+		glClear(GL_COLOR_BUFFER_BIT);
 		m_PureColorShader->Bind();
 		glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
 	}	 

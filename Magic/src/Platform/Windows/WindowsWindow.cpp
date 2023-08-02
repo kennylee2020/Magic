@@ -7,7 +7,7 @@
 namespace Magic {
 	static void error_callback(int error, const char* description)
 	{
-		MAG_ERROR(description);
+		MAG_CORE_ERROR("{0}::{1}",error, description);
 	}
 
 	static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
