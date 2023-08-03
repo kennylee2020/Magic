@@ -91,7 +91,7 @@ namespace Magic {
 	
 	void WindowsWindow::OnUpdate()
 	{
-		glfwSwapBuffers(m_Window);
+		m_GraphicsContext->SwapBuffers();
 		glfwPollEvents();
 	}
 
@@ -128,6 +128,9 @@ namespace Magic {
 		glfwSetWindowCloseCallback(window, window_close_callback);
 		glfwSetWindowSizeCallback(window, window_size_callback);
 		glfwSetWindowFocusCallback(window, window_focus_callback);
+
+		m_GraphicsContext = GraphicsContext::Create(this);
+		m_GraphicsContext->Init();
 	}
 
 	void WindowsWindow::shutdow()

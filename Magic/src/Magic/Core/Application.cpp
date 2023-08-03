@@ -13,9 +13,6 @@ namespace Magic {
 		m_IsRunning = true;
 		m_Window = Window::Create({ "Magic", 640, 480 });
 		m_Window->SetWindowEventCallback(BIND_EVENT_CALLBACK(Application::OnEvent));
-		
-		m_GraphicsContext = GraphicsContext::Create();
-		m_GraphicsContext->Init();
 
 		PushLayer(new ImGuiLayer());
 	}

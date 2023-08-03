@@ -5,11 +5,11 @@
 #include "OpenGLGraphicsContext.h"
 
 namespace Magic {
-	void OpenGLGraphicsContext::Init(){
-		Application* app = Application::GetApplication();
-		std::shared_ptr<Window> window =  app->GetWindow();
+	OpenGLGraphicsContext::OpenGLGraphicsContext(Window* window) : m_Window(window){
+	}
 
-		GLFWwindow* nativeWindow = (GLFWwindow*)window->GetNativeWindow();
+	void OpenGLGraphicsContext::Init(){
+		GLFWwindow* nativeWindow = (GLFWwindow*)m_Window->GetNativeWindow();
 		glfwMakeContextCurrent(nativeWindow);
 		gladLoadGL();
 		glfwSwapInterval(1);
@@ -19,5 +19,10 @@ namespace Magic {
 		
 		glViewport(0, 0, width, height);
 		glClear(GL_COLOR_BUFFER_BIT);
+	}
+
+	void OpenGLGraphicsContext::SwapBuffers() {
+		GLFWwindow* nativeWindow = (GLFWwindow*)m_Window->GetNativeWindow();
+		glfwSwapBuffers(nativeWindow);
 	}
 }

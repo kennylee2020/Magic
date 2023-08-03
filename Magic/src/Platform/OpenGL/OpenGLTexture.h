@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Magic/Graphics/Texture.h"
+
 namespace Magic {
 	class OpenGLTexture2D : public Texture2D {
 	public:

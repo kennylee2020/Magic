@@ -20,7 +20,6 @@ namespace Magic {
 		void PushLayer(Layer* layer);
 		bool OnEvent(Event& event);
 		Ref<Window> GetWindow() const { return m_Window; }
-		Ref<GraphicsContext> GetGraphicsContext() const { return m_GraphicsContext; }
 	public:
 		static inline Application* GetApplication() { return s_Instance; }
 	private:
@@ -39,7 +38,6 @@ namespace Magic {
 	private:
 		bool m_IsRunning;
 		Ref<Window> m_Window;
-		Ref<GraphicsContext> m_GraphicsContext;
 		LayerStack m_LayerStack;
 	private:
 		static Application* s_Instance;

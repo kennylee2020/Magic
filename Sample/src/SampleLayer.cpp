@@ -1,6 +1,5 @@
 #include "SampleLayer.h"
 #include <imgui.h>
-#include <glad/glad.h>
 
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
@@ -48,9 +47,9 @@ namespace Sample {
 
 	void SampleLayer::OnUpdate()
 	{
-		glClear(GL_COLOR_BUFFER_BIT);
+		Magic::RendererCommand::Clear();
 		m_PureColorShader->Bind();
-		glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+		Magic::RendererCommand::DrawIndexed(m_IndexBuffer);
 	}	 
 		 
 	void SampleLayer::OnImGui()

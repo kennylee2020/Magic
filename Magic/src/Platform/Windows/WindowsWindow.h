@@ -1,6 +1,7 @@
 #pragma once
 #include "GLFW/glfw3.h"
 #include "Magic/Core/Window.h"
+#include "Magic/Graphics/GraphicsContext.h"
 
 namespace Magic {
 	class WindowsWindow : public Window
@@ -25,6 +26,7 @@ namespace Magic {
 		void init(const WindowData& windowData);
 		void shutdow();
 	private:
+		Ref<GraphicsContext> m_GraphicsContext;
 		GLFWwindow* m_Window;
 		WindowData m_Data;
 	};
