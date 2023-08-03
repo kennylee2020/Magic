@@ -12,4 +12,5 @@
 #include "Magic/Graphics/Buffer.h"
 #include "Magic/Graphics/Shader.h"
 #include "Magic/Graphics/Texture.h"
+#include "Magic/Graphics/Mesh.h"
 #include "Magic/Graphics/RendererCommand.h"

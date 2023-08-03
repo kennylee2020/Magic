@@ -27,6 +27,10 @@ namespace Magic {
 		glGenBuffers(1, &m_RendererId);
 	}
 
+	OpenGLBuffer::~OpenGLBuffer() {
+		glDeleteBuffers(1, &m_RendererId);
+	}
+
 	void OpenGLBuffer::Bind() const
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererId);
@@ -37,7 +41,7 @@ namespace Magic {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
-	void OpenGLBuffer::SetBufferData(unsigned int size, const void* data)
+	void OpenGLBuffer::SetBufferData(const void* data, uint32_t size)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererId);
 		glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
@@ -63,6 +67,10 @@ namespace Magic {
 		glGenBuffers(1, &m_RendererId);
 	}
 
+	OpenGLIndexBuffer::~OpenGLIndexBuffer() {
+		glDeleteBuffers(1, &m_RendererId);
+	}
+
 	void OpenGLIndexBuffer::Bind() const
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererId);
@@ -73,15 +81,15 @@ namespace Magic {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
-	int OpenGLIndexBuffer::GetCount() const
+	uint32_t OpenGLIndexBuffer::GetCount() const
 	{
 		return m_Count;
 	}
 
-	void OpenGLIndexBuffer::SetBufferData(unsigned int count, const unsigned int* data)
+	void OpenGLIndexBuffer::SetBufferData(const uint32_t* data, uint32_t count)
 	{
 		m_Count = count;
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererId);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * count, data, GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t) * count, data, GL_STATIC_DRAW);
 	}
 }

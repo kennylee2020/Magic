@@ -22,20 +22,17 @@ namespace Sample {
 			{   0.f,  0.6f, 0.f, 0.f, 1.f, 0.5f,1.f }
 		};
 
-		unsigned int indices[3] = { 0, 1, 2 };
+		uint32_t indices[3] = { 0, 1, 2 };
 
 		Magic::BufferLayout layout{
 			{"vPos", Magic::ShaderDataType::Float2, 0},
 			{"vCol", Magic::ShaderDataType::Float3, 0},
 			{"vUV",  Magic::ShaderDataType::Float2, 0},
 		};
-		m_Buffer = Magic::Buffer::Create(layout);
-		m_Buffer->SetBufferData(sizeof(vertices), vertices);
-		m_Buffer->Bind();
-
-		m_IndexBuffer = Magic::IndexBuffer::Create();
-		m_IndexBuffer->SetBufferData(3, indices);
-		m_IndexBuffer->Bind();
+		m_Mesh = Magic::Mesh::Create();
+		m_Mesh->AddBuffer(layout, vertices, sizeof(vertices));
+		m_Mesh->SetIndexBuffer(indices, sizeof(indices) /  sizeof(uint32_t));
+		m_Mesh->Bind();
 
 		m_PureColorShader = Magic::Shader::Create("assets/shader/pure_color.glsl");
 		m_PureColorShader->Bind();
@@ -49,7 +46,7 @@ namespace Sample {
 	{
 		Magic::RendererCommand::Clear();
 		m_PureColorShader->Bind();
-		Magic::RendererCommand::DrawIndexed(m_IndexBuffer);
+		Magic::RendererCommand::DrawIndexed(m_Mesh->GetIndexBuffer());
 	}	 
 		 
 	void SampleLayer::OnImGui()

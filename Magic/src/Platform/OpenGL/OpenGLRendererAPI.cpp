@@ -20,6 +20,7 @@ namespace Magic {
 
 	void OpenGLRendererAPI::DrawIndexed(const Ref<IndexBuffer>& indexBuffer)
 	{
+		indexBuffer->Bind();
 		glDrawElements(GL_TRIANGLES, indexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
 	}
 }

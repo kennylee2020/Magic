@@ -9,9 +9,8 @@ namespace Sample {
 		virtual void OnImGui() override;
 		virtual void OnEvent(Magic::Event& e) override;
 	private:
-		std::shared_ptr<Magic::Buffer> m_Buffer;
-		std::shared_ptr<Magic::IndexBuffer> m_IndexBuffer;
-		std::shared_ptr<Magic::Texture> m_Texture;
-		std::shared_ptr<Magic::Shader> m_PureColorShader;
+		Magic::Ref<Magic::Mesh> m_Mesh;
+		Magic::Ref<Magic::Texture> m_Texture;
+		Magic::Ref<Magic::Shader> m_PureColorShader;
 	};
 }

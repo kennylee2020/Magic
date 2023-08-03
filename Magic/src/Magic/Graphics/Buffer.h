@@ -19,7 +19,7 @@ namespace Magic {
 		case Magic::ShaderDataType::Float3:	return 4 * 3;
 		case Magic::ShaderDataType::Float4:	return 4 * 4;
 		}
-		MAG_CORE_ERROR("Unknown ShaderDataType {0}", 0);
+		MAG_CORE_ERROR("Unknown ShaderDataType {0}", (int)type);
 	}
 
 	static int shaderDataType2Dimension(const ShaderDataType type) {
@@ -36,7 +36,7 @@ namespace Magic {
 		case Magic::ShaderDataType::Float3:	return 3;
 		case Magic::ShaderDataType::Float4:	return 4;
 		}
-		MAG_CORE_ERROR("Unknown ShaderDataType {0}", 0);
+		MAG_CORE_ERROR("Unknown ShaderDataType {0}", (int)type);
 	}
 
 	class BufferLayout {
@@ -81,7 +81,7 @@ namespace Magic {
 		Buffer(const BufferLayout& layout) {};
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
-		virtual void SetBufferData(unsigned int size, const void* data) = 0;
+		virtual void SetBufferData(const void* data, uint32_t size) = 0;
 
 		static Ref<Buffer> Create(const BufferLayout& layout);
 	protected:
@@ -94,8 +94,8 @@ namespace Magic {
 		IndexBuffer() = default;
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
-		virtual int GetCount() const = 0;
-		virtual void SetBufferData(unsigned int count, const unsigned int* data) = 0;
+		virtual uint32_t GetCount() const = 0;
+		virtual void SetBufferData(const uint32_t* data, uint32_t count) = 0;
 
 		static Ref<IndexBuffer> Create();
 	};
