@@ -10,7 +10,6 @@ namespace Sample {
 		virtual void OnEvent(Magic::Event& e) override;
 	private:
 		Magic::Ref<Magic::Mesh> m_Mesh;
-		Magic::Ref<Magic::Texture> m_Texture;
-		Magic::Ref<Magic::Shader> m_PureColorShader;
+		Magic::Ref<Magic::Material> m_Material;
 	};
 }

@@ -34,20 +34,18 @@ namespace Sample {
 		m_Mesh->SetIndexBuffer(indices, sizeof(indices) /  sizeof(uint32_t));
 		m_Mesh->Bind();
 
-		m_PureColorShader = Magic::Shader::Create("assets/shader/pure_color.glsl");
-		m_PureColorShader->Bind();
-		m_PureColorShader->SetInt("u_Texture", 0);
-
-		m_Texture = Magic::Texture2D::Create("assets/image/test_img.jpg");
-		m_Texture->Bind(0);
+		m_Material = Magic::Material::Create(Magic::Shader::Create("assets/shader/pure_color.glsl"));
+		m_Material->SetTexture("u_Texture", Magic::Texture2D::Create("assets/image/test_img.jpg"));
+		m_Material->Bind();
 	}
 
 	void SampleLayer::OnUpdate()
 	{
 		Magic::RendererCommand::Clear();
-		m_PureColorShader->Bind();
-		Magic::RendererCommand::DrawIndexed(m_Mesh->GetIndexBuffer());
-	}	 
+		Magic::Graphics::DrawMesh(m_Mesh, m_Material, glm::translate(glm::mat4(1.0f), glm::vec3(0.5f, 0.0f, 0.0f)));
+		Magic::Graphics::DrawMesh(m_Mesh, m_Material, glm::translate(glm::mat4(1.0f), glm::vec3(-0.5f, 0.0f, 0.0f)));
+		Magic::Graphics::DrawMesh(m_Mesh, m_Material, glm::translate(glm::mat4(1.0f), glm::vec3(-0.5f, 0.5f, 0.0f)));
+	}
 		 
 	void SampleLayer::OnImGui()
 	{	
