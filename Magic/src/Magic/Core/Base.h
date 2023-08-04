@@ -1,4 +1,6 @@
 #pragma once
+#include <memory>
+
 #define BIT(shift) 1 << shift
 
 #define BIND_EVENT_CALLBACK(callback) std::bind(&callback, this, std::placeholders::_1)

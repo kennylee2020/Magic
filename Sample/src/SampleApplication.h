@@ -5,7 +5,7 @@ namespace Sample {
 	class SampleApplication : public Magic::Application
 	{
 	public:
-		SampleApplication();
+		SampleApplication(const Magic::Application::ApplicationDesc desc);
 		~SampleApplication();
 	private:
 	};

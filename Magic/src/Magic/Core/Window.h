@@ -12,7 +12,7 @@ namespace Magic {
 			int width;
 			int height;
 			std::string title;
-			WindowDesc(const std::string title,int width, int height) : title(title),width(width),height(height){}
+			WindowDesc(const std::string title = "Magic", int width = 640, int height = 360) : title(title), width(width), height(height) {}
 		};
 		typedef std::function<bool(Event& e)> WindowEventFunc;
 	public:

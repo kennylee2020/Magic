@@ -6,6 +6,10 @@ namespace Magic {
 	class RendererCommand
 	{
 	public:
+		inline static void Init() {
+			s_RendererAPI->Init();
+		};
+
 		inline static void Clear() {
 			s_RendererAPI->Clear();
 		};

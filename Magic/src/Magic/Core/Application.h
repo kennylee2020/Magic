@@ -15,7 +15,11 @@ namespace Magic {
 	class Application
 	{
 	public:
-		Application();
+		struct ApplicationDesc{
+			Window::WindowDesc windowDesc;
+		};
+	public:
+		Application(const ApplicationDesc desc);
 		~Application() = default;
 		void PushLayer(Layer* layer);
 		bool OnEvent(Event& event);

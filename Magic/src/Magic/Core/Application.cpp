@@ -1,18 +1,18 @@
 #include "magicpch.h"
 #include "Magic/Event/Event.h"
 #include "Magic/Core/Application.h"
-#include "Magic/Graphics/Graphics.h"
 #include "Magic/ImGui/ImGuiLayer.h"
+#include "Magic/Graphics/Graphics.h"
 
 namespace Magic {
 	Application* Application::s_Instance = nullptr;
 
-	Application::Application()
+	Application::Application(const ApplicationDesc desc)
 	{
 		MAG_CORE_INFO("Magic start!");
 		s_Instance = this;
 		m_IsRunning = true;
-		m_Window = Window::Create({ "Magic", 640, 480 });
+		m_Window = Window::Create(desc.windowDesc);
 		m_Window->SetWindowEventCallback(BIND_EVENT_CALLBACK(Application::OnEvent));
 
 		Graphics::Init();
@@ -63,7 +63,7 @@ namespace Magic {
 
 	bool Application::onWindowResizeEvent(WindowResizeEvent& e) {
 		MAG_INFO("onWindowResizeEvent");
-		RendererCommand::SetViewPort(0, 0, e.GetWidth(), e.GetHeight());
+		Graphics::OnWindowResize(e.GetWidth(), e.GetHeight());
 		return true;
 	}
 
