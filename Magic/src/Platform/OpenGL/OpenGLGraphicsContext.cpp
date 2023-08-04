@@ -13,12 +13,9 @@ namespace Magic {
 		glfwMakeContextCurrent(nativeWindow);
 		gladLoadGL();
 		glfwSwapInterval(1);
-
-		int width, height;
-		glfwGetFramebufferSize(nativeWindow, &width, &height);
-		
-		glViewport(0, 0, width, height);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
 	void OpenGLGraphicsContext::SwapBuffers() {

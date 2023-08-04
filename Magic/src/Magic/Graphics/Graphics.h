@@ -7,6 +7,10 @@ namespace Magic {
 	class Graphics
 	{
 	public:
+		inline static void Init() {
+			Mesh::Init();
+		}
+
 		inline static void DrawMesh(const Ref<Mesh>& mesh, const Ref<Material>& material, const glm::mat4x4& localToWorld) {
 			mesh->Bind();
 			material->Bind();

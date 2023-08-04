@@ -1,6 +1,7 @@
 #include "magicpch.h"
 #include "Magic/Event/Event.h"
 #include "Magic/Core/Application.h"
+#include "Magic/Graphics/Graphics.h"
 #include "Magic/ImGui/ImGuiLayer.h"
 
 namespace Magic {
@@ -13,6 +14,9 @@ namespace Magic {
 		m_IsRunning = true;
 		m_Window = Window::Create({ "Magic", 640, 480 });
 		m_Window->SetWindowEventCallback(BIND_EVENT_CALLBACK(Application::OnEvent));
+
+		Graphics::Init();
+		RendererCommand::SetViewPort(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
 
 		PushLayer(new ImGuiLayer());
 	}
@@ -59,6 +63,7 @@ namespace Magic {
 
 	bool Application::onWindowResizeEvent(WindowResizeEvent& e) {
 		MAG_INFO("onWindowResizeEvent");
+		RendererCommand::SetViewPort(0, 0, e.GetWidth(), e.GetHeight());
 		return true;
 	}
 

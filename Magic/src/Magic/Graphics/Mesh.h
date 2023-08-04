@@ -13,6 +13,8 @@ namespace Magic {
 		virtual void Unbind() const = 0;
 		virtual Ref<IndexBuffer>& GetIndexBuffer() = 0;
 	public:
+		static Ref<Mesh> Cube;
+		static void Init();
 		static Ref<Mesh> Create();
 	};
 }
