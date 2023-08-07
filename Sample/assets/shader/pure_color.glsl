@@ -11,15 +11,16 @@ void main()
     gl_Position = u_MVP * vec4(vPos, 1.0);
     color = vCol;
     uv = vUV;
-};
+}
 
 #program fragment
 #version 330 core
 uniform sampler2D u_Texture;
 in vec4 color;
 in vec2 uv;
+out vec4 fragColor;
 void main()
 {
     vec4 texColor = texture(u_Texture, uv);
-    gl_FragColor = texColor * color;
-};
+    fragColor = texColor * color;
+}

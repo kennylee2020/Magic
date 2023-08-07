@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include "Log.h"
 
 #define BIT(shift) 1 << shift
 
@@ -8,7 +9,7 @@
 #ifdef NDEBUG
 #define ASSERT(_EXPR) ((void)0)
 #else
-#define ASSERT(_EXPR) assert(_EXPR)
+#define ASSERT(_EXPR, ...) if(!(_EXPR)) MAG_CORE_ERROR(__VA_ARGS__)
 #endif
 
 namespace Magic {

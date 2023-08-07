@@ -1,6 +1,6 @@
 #pragma once
 #include "Camera.h"
-#include "Magic/Graphics/Graphics.h";
+#include "Magic/Graphics/Graphics.h"
 
 namespace Magic {
 	class Renderer2D

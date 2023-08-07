@@ -16,63 +16,75 @@ namespace Magic {
 			glfwSetWindowShouldClose(window, GLFW_TRUE);
 		if (action == GLFW_PRESS) {
 			WindowsWindow::WindowData& data = *(WindowsWindow::WindowData*)glfwGetWindowUserPointer(window);
-			data.windowEvent(KeyDownEvent(key, 0));
+			KeyDownEvent e(key, 0);
+			data.windowEvent(e);
 		}else if (action == GLFW_RELEASE) {
 			WindowsWindow::WindowData& data = *(WindowsWindow::WindowData*)glfwGetWindowUserPointer(window);
-			data.windowEvent(KeyUpEvent(key));
+			KeyUpEvent e(key);
+			data.windowEvent(e);
 		}else if (action == GLFW_REPEAT) {
 			WindowsWindow::WindowData& data = *(WindowsWindow::WindowData*)glfwGetWindowUserPointer(window);
-			data.windowEvent(KeyDownEvent(key, 1));
+			KeyDownEvent e(key, 1);
+			data.windowEvent(e);
 		}
 	}
 
 	static void char_callback(GLFWwindow* window, unsigned int keycode)
 	{	
 		WindowsWindow::WindowData& data = *(WindowsWindow::WindowData*)glfwGetWindowUserPointer(window);
-		data.windowEvent(KeyTypedEvent(keycode));
+		KeyTypedEvent e(keycode);
+		data.windowEvent(e);
 	}
 
 	static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 	{
 		WindowsWindow::WindowData& data = *(WindowsWindow::WindowData*)glfwGetWindowUserPointer(window);
-		data.windowEvent(MouseScrollEvent((float)xoffset, (float)yoffset));
+		MouseScrollEvent e((float)xoffset, (float)yoffset);
+		data.windowEvent(e);
 	}
 
 	static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 	{
 		WindowsWindow::WindowData& data = *(WindowsWindow::WindowData*)glfwGetWindowUserPointer(window);
 		if (action == GLFW_PRESS) {
-			data.windowEvent(MouseButtonDownEvent(button));
+			MouseButtonDownEvent e(button);
+			data.windowEvent(e);
 		}else if(action == GLFW_RELEASE) {
-			data.windowEvent(MouseButtonUpEvent(button));
+			MouseButtonUpEvent e(button);
+			data.windowEvent(e);
 		}
 	}
 
 	static void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos)
 	{
 		WindowsWindow::WindowData& data = *(WindowsWindow::WindowData*)glfwGetWindowUserPointer(window);
-		data.windowEvent(MouseMoveEvent((float)xpos, (float)ypos));
+		MouseMoveEvent e((float)xpos, (float)ypos);
+		data.windowEvent(e);
 	}
 
 	static void window_close_callback(GLFWwindow* window)
 	{
 		WindowsWindow::WindowData& data = *(WindowsWindow::WindowData*)glfwGetWindowUserPointer(window);
-		data.windowEvent(WindowCloseEvent());
+		WindowCloseEvent e;
+		data.windowEvent(e);
 	}
 
 	static void window_size_callback(GLFWwindow* window, int width, int height)
 	{
 		WindowsWindow::WindowData& data = *(WindowsWindow::WindowData*)glfwGetWindowUserPointer(window);
-		data.windowEvent(WindowResizeEvent(width, height));
+		WindowResizeEvent e(width, height);
+		data.windowEvent(e);
 	}
 
 	static void window_focus_callback(GLFWwindow* window, int focused)
 	{
 		WindowsWindow::WindowData& data = *(WindowsWindow::WindowData*)glfwGetWindowUserPointer(window);
 		if(focused){
-			data.windowEvent(WindowFocusEvent());
+			WindowFocusEvent e;
+			data.windowEvent(e);
 		}else{
-			data.windowEvent(WindowLostFocus());
+			WindowLostFocus e;
+			data.windowEvent(e);
 		}
 	}
 
@@ -110,7 +122,7 @@ namespace Magic {
 		}
 
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
 		window = glfwCreateWindow(data.width, data.height, data.title.c_str(), NULL, NULL);
 		if (!window)

@@ -17,7 +17,8 @@ namespace Magic {
 		case Magic::ShaderDataType::Float3:	return GL_FLOAT;
 		case Magic::ShaderDataType::Float4:	return GL_FLOAT;
 		}
-		MAG_CORE_ERROR("Unknown ShaderDataType {0}", 0);
+		MAG_CORE_ERROR("Unknown ShaderDataType {0}", (int)type);
+		return GL_NONE;
 	}
 	
 	/// <summary>

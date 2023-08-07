@@ -60,7 +60,7 @@ namespace Magic {
 
 	void Material::SetTexture(std::string name, const Ref<Texture>& texture)
 	{
-		int slotIndex = m_Textures.size();
+		int slotIndex = (int)m_Textures.size();
 		m_Shader->SetInt(name, slotIndex);
 		m_Textures.push_back(texture);
 	}

@@ -20,12 +20,13 @@ namespace Magic {
 		case Magic::ShaderDataType::Float4:	return 4 * 4;
 		}
 		MAG_CORE_ERROR("Unknown ShaderDataType {0}", (int)type);
+		return 0;
 	}
 
 	static int shaderDataType2Dimension(const ShaderDataType type) {
 		switch (type)
 		{
-		case Magic::ShaderDataType::None:	return 1;
+		case Magic::ShaderDataType::None:	return 0;
 		case Magic::ShaderDataType::Bool:	return 1;
 		case Magic::ShaderDataType::Int:	return 1;
 		case Magic::ShaderDataType::Int2:	return 2;
@@ -37,6 +38,7 @@ namespace Magic {
 		case Magic::ShaderDataType::Float4:	return 4;
 		}
 		MAG_CORE_ERROR("Unknown ShaderDataType {0}", (int)type);
+		return 0;
 	}
 
 	class BufferLayout {
