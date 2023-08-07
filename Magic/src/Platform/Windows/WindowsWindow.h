@@ -15,8 +15,7 @@ namespace Magic {
 		};
 	public:
 		WindowsWindow(const WindowDesc& windowDesc);
-		~WindowsWindow();
-
+		virtual ~WindowsWindow() override;
 		virtual int GetWidth() const override { return m_Data.width;}
 		virtual int GetHeight() const override {return m_Data.height;}
 		virtual void OnUpdate() override;

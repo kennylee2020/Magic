@@ -8,7 +8,7 @@ namespace Magic {
 	class Layer {
 	public:
 		Layer(const std::string& name);
-		~Layer() = default;
+		virtual ~Layer() = default;
 		virtual void OnAttach() {};
 		virtual void OnDetach() {};
 		virtual void OnUpdate() {};

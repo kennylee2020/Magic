@@ -20,7 +20,7 @@ namespace Magic {
 		};
 	public:
 		Application(const ApplicationDesc desc);
-		~Application() = default;
+		virtual ~Application() = default;
 		void PushLayer(Layer* layer);
 		bool OnEvent(Event& event);
 		Ref<Window> GetWindow() const { return m_Window; }

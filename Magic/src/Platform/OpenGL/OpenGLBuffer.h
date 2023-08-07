@@ -5,7 +5,7 @@ namespace Magic {
 	class OpenGLBuffer : public Buffer {
 	public:
 		OpenGLBuffer(const BufferLayout& layout);
-		~OpenGLBuffer();
+		virtual ~OpenGLBuffer() override;
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
 		virtual void SetBufferData(const void* data,uint32_t size) override;
@@ -19,7 +19,7 @@ namespace Magic {
 	class OpenGLIndexBuffer : public IndexBuffer {
 	public:
 		OpenGLIndexBuffer();
-		~OpenGLIndexBuffer();
+		virtual ~OpenGLIndexBuffer() override;
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
 		virtual uint32_t GetCount() const override;

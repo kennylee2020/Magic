@@ -7,7 +7,7 @@ namespace Magic {
 	class OpenGLShader : public Shader{
 	public:
 		OpenGLShader(std::string filePath);
-		~OpenGLShader();
+		virtual ~OpenGLShader() override;
 
 		virtual void Bind() const override;
 		virtual void Unbind() const override;

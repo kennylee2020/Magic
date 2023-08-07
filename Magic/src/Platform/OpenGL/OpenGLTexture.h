@@ -7,7 +7,7 @@ namespace Magic {
 	public:
 		OpenGLTexture2D(int width, int height, uint8_t* data);
 		OpenGLTexture2D(std::string filePath);
-		~OpenGLTexture2D();
+		virtual ~OpenGLTexture2D() override;
 		virtual void Bind(uint32_t slot) const override;
 		virtual void Unbind() const override;
 		virtual int GetWidth() const override;

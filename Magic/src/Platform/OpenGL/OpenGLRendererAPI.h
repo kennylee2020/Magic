@@ -4,6 +4,7 @@
 namespace Magic {
 	class OpenGLRendererAPI : public RendererAPI{
 	public:
+		virtual ~OpenGLRendererAPI() override = default;
 		virtual void Init() override;
 		virtual void Clear() override;
 		virtual void SetClearColor(const glm::vec4& color) override;

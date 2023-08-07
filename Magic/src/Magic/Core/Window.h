@@ -16,6 +16,7 @@ namespace Magic {
 		};
 		typedef std::function<bool(Event& e)> WindowEventFunc;
 	public:
+		virtual ~Window() = default;
 		virtual int GetWidth() const = 0;
 		virtual int GetHeight() const = 0;
 		virtual void OnUpdate() = 0;

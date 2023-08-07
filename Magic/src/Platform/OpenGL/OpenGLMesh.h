@@ -6,7 +6,7 @@ namespace Magic {
 	class OpenGLMesh : public Mesh {
 	public:
 		OpenGLMesh();
-		~OpenGLMesh();
+		virtual ~OpenGLMesh() override;
 		virtual void AddBuffer(const BufferLayout& layout, const void* data, uint32_t size) override;
 		virtual void SetIndexBuffer(const uint32_t* data, uint32_t count) override;
 		virtual Ref<IndexBuffer>& GetIndexBuffer() override;

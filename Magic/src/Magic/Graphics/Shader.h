@@ -12,8 +12,7 @@ namespace Magic {
 		};
 	public:
 		Shader() = default;
-		~Shader() = default;
-
+		virtual ~Shader() = default;
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
 		virtual void SetInt(std::string name, int value) const = 0;
