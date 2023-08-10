@@ -23,9 +23,9 @@ namespace Magic {
 		Quad->SetIndexBuffer(indices, sizeof(indices) / sizeof(uint32_t));
 	}
 
-	void Renderer2D::BeginScene(const Ref<Camera>& camera)
+	void Renderer2D::BeginScene(const glm::mat4x4& vpMatrix)
 	{
-		s_Context.vpMatrix = camera->GetProjection() * camera->GetTransform().GetWorldToLocalMatrix();
+		s_Context.vpMatrix = vpMatrix;
 	}
 
 	void Renderer2D::EndScene()

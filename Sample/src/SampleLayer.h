@@ -9,9 +9,10 @@ namespace Sample {
 		virtual void OnImGui() override;
 		virtual void OnEvent(Magic::Event& e) override;
 	private:
-		bool OnWindowResize(Magic::WindowResizeEvent& e);
+		bool OnKeyDownEvent(Magic::KeyDownEvent& e);
 	private:
-		Magic::Ref<Magic::Camera> m_Camera;
 		Magic::Ref<Magic::Material> m_Material;
+		Magic::Ref<Magic::Scene> m_Scene;
+		Magic::Entity m_CameraEntity;
 	};
 }

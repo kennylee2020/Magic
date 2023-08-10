@@ -1,5 +1,4 @@
 #pragma once
-#include "Camera.h"
 #include "Magic/Graphics/Graphics.h"
 
 namespace Magic {
@@ -11,7 +10,7 @@ namespace Magic {
 		};
 	public:
 		static void Init();
-		static void BeginScene(const Ref<Camera>& camera);
+		static void BeginScene(const glm::mat4x4& vpMatrix);
 		static void EndScene();
 		static void DrawMesh(const Ref<Mesh>& mesh, const Ref<Material>& material, const glm::mat4x4& localToWorld);
 	public:
