@@ -2,7 +2,7 @@ Scene: Unnamed
 Entities:
   - ID: true
     TransformComponent:
-      Position: [0, 0, -1]
+      Position: [0, 0, -5]
       EulerAngles: [0, 0, 0]
       Scale: [1, 1, 1]
   - ID: true
@@ -17,11 +17,11 @@ Entities:
       Far: 100
   - ID: true
     TransformComponent:
-      Position: [0, 0, 0]
+      Position: [0, 0, 5]
       EulerAngles: [0, 0, 0]
       Scale: [1, 1, 1]
     CameraComponent:
-      SizeOrFov: 2
-      Orthographic: true
+      SizeOrFov: 45
+      Orthographic: false
       Near: 0.00999999978
       Far: 100

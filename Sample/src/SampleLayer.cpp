@@ -1,5 +1,6 @@
 #include "SampleLayer.h"
 #include <imgui.h>
+#include <ImGuizmo.h>
 
 namespace Sample {
 	SampleLayer::SampleLayer() : Layer("SampleLayer"){
@@ -13,8 +14,8 @@ namespace Sample {
 		int height = window->GetHeight();
 
 		Magic::Entity& cameraEntity = m_Scene->CreateEntity();
-		cameraEntity.AddComponent<Magic::TransformComponent>(glm::vec3(0.0f, 0.0f, 0.0f));
-		cameraEntity.AddComponent<Magic::CameraComponent>(2.0f, (float)width / (float)height, true);
+		cameraEntity.AddComponent<Magic::TransformComponent>(glm::vec3(0.0f, 0.0f, 5.0f));
+		cameraEntity.AddComponent<Magic::CameraComponent>(45.0f, (float)width / (float)height, false);
 		m_CameraEntity = cameraEntity;
 
 		Magic::Entity& cameraEntity2 = m_Scene->CreateEntity();
@@ -22,9 +23,10 @@ namespace Sample {
 		cameraEntity2.AddComponent<Magic::CameraComponent>(5.0f, (float)width / (float)height, true);
 
 		Magic::Entity& entity = m_Scene->CreateEntity();
-		entity.AddComponent<Magic::TransformComponent>(glm::vec3(0.0f, 0.0f, -1.0f));
+		entity.AddComponent<Magic::TransformComponent>(glm::vec3(0.0f, 0.0f, -5.0f));
 		entity.AddComponent<Magic::MeshComponent>(Magic::Renderer2D::Quad);
 		entity.AddComponent<Magic::MaterialComponent>(m_Material);
+		m_QuadEntity = entity;
 
 		Magic::SceneSerializer serializer(m_Scene);
 		serializer.Serialize("assets/scene/test.magic");
@@ -41,6 +43,28 @@ namespace Sample {
 		ImGui::Begin("Magic");
 		ImGui::DragFloat("Test Float", &floatValue);
 		ImGui::End();
+
+		const Magic::TransformComponent& cameraTransformComponent = m_CameraEntity.GetComponent<Magic::TransformComponent>();
+		const Magic::CameraComponent& cameraComponent = m_CameraEntity.GetComponent<Magic::CameraComponent>();
+		Magic::TransformComponent& quadTransformComponent = m_QuadEntity.GetComponent<Magic::TransformComponent>();
+		glm::mat4x4 transform = quadTransformComponent.GetLocalToWorldMatrix();
+
+		ImGuiIO& io = ImGui::GetIO();
+		ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
+		ImGuizmo::Manipulate(
+			glm::value_ptr(cameraTransformComponent.GetWorldToLocalMatrix()),
+			glm::value_ptr(cameraComponent.GetProjection()), 
+			ImGuizmo::OPERATION::UNIVERSAL,
+			ImGuizmo::MODE::LOCAL,
+			glm::value_ptr(transform));
+
+		if (ImGuizmo::IsUsing()) {
+			glm::vec3 position, rotation, scale;
+			Magic::Math::DecomposeMatrix(transform, position, rotation, scale);
+			quadTransformComponent.SetPosition(position);
+			quadTransformComponent.SetEulerAngles(rotation);
+			quadTransformComponent.SetScale(scale);
+		}
 	}	 
 		 
 	void SampleLayer::OnEvent(Magic::Event& e)

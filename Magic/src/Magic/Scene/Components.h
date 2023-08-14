@@ -35,6 +35,11 @@ namespace Magic {
 			CalculateMatrix();
 		}
 
+		void SetRotation(const glm::vec3& rotation)
+		{
+			SetEulerAngles(glm::degrees(rotation));
+		}
+
 		void SetEulerAngles(const glm::vec3& eulerAngles)
 		{
 			m_EulerAngles = eulerAngles;

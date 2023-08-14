@@ -14,5 +14,6 @@ namespace Sample {
 		Magic::Ref<Magic::Material> m_Material;
 		Magic::Ref<Magic::Scene> m_Scene;
 		Magic::Entity m_CameraEntity;
+		Magic::Entity m_QuadEntity;
 	};
 }

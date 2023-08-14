@@ -22,3 +22,26 @@ PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/imgui/backends
     ${CMAKE_CURRENT_LIST_DIR}/glfw/include
 )
+
+
+################################### ImGuizmo #################################
+# 1、define library
+add_library(ImGuizmo STATIC)
+
+# 2、add sources
+file(GLOB srcs
+    ${CMAKE_CURRENT_LIST_DIR}/ImGuizmo/*.h
+    ${CMAKE_CURRENT_LIST_DIR}/ImGuizmo/*.cpp
+)
+
+target_sources(ImGuizmo
+PRIVATE
+    ${srcs}
+)
+
+# 3、add include directories
+target_include_directories(ImGuizmo
+PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/ImGuizmo
+    ${CMAKE_CURRENT_LIST_DIR}/imgui
+)
