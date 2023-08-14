@@ -1,8 +1,8 @@
 #include "magicpch.h"
 #include "Scene.h"
 #include "Entity.h"
-#include "Magic/Pipeline/Renderer2D.h"
 #include "Components.h"
+#include "Magic/Pipeline/Renderer2D.h"
 
 namespace Magic {
 	Entity Scene::CreateEntity()

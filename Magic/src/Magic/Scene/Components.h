@@ -4,6 +4,13 @@
 #include "Magic/Graphics/Graphics.h"
 
 namespace Magic {
+	struct NameComponent {
+		std::string Name;
+		NameComponent() = default;
+		NameComponent(const NameComponent&) = default;
+		NameComponent(const std::string& name) : Name(name){}
+	};
+
 	struct TransformComponent
 	{
 	public:

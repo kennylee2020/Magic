@@ -8,20 +8,26 @@ namespace Sample {
 		m_Material->Bind();
 
 		m_Scene = Magic::CreateRef<Magic::Scene>();
+		Magic::Ref<Magic::Window> window = Magic::Application::GetApplication()->GetWindow();
+		int width = window->GetWidth();
+		int height = window->GetHeight();
 
 		Magic::Entity& cameraEntity = m_Scene->CreateEntity();
 		cameraEntity.AddComponent<Magic::TransformComponent>(glm::vec3(0.0f, 0.0f, 0.0f));
-		cameraEntity.AddComponent<Magic::CameraComponent>(2.0f, 4.0f / 3.0f, true);
+		cameraEntity.AddComponent<Magic::CameraComponent>(2.0f, (float)width / (float)height, true);
 		m_CameraEntity = cameraEntity;
 
 		Magic::Entity& cameraEntity2 = m_Scene->CreateEntity();
 		cameraEntity2.AddComponent<Magic::TransformComponent>(glm::vec3(2.0f, 0.0f, 0.0f));
-		cameraEntity2.AddComponent<Magic::CameraComponent>(5.0f, 4.0f / 3.0f, true);
+		cameraEntity2.AddComponent<Magic::CameraComponent>(5.0f, (float)width / (float)height, true);
 
 		Magic::Entity& entity = m_Scene->CreateEntity();
 		entity.AddComponent<Magic::TransformComponent>(glm::vec3(0.0f, 0.0f, -1.0f));
 		entity.AddComponent<Magic::MeshComponent>(Magic::Renderer2D::Quad);
 		entity.AddComponent<Magic::MaterialComponent>(m_Material);
+
+		Magic::SceneSerializer serializer(m_Scene);
+		serializer.Serialize("assets/scene/test.magic");
 	}
 
 	void SampleLayer::OnUpdate()

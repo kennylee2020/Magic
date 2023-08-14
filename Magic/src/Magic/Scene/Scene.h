@@ -22,5 +22,6 @@ namespace Magic {
 	private:
 		friend class Entity;
 		friend class RenderPipeline;
+		friend class SceneSerializer;
 	};
 }

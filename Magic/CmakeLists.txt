@@ -28,6 +28,7 @@ add_subdirectory(vendor/glfw)
 add_subdirectory(vendor/spdlog)
 add_subdirectory(vendor/glm)
 add_subdirectory(vendor/stb)
+add_subdirectory(vendor/yaml-cpp)
 
 # 5、add include directories
 target_include_directories(Magic
@@ -39,6 +40,7 @@ PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/vendor/glm
     ${CMAKE_CURRENT_LIST_DIR}/vendor/stb
     ${CMAKE_CURRENT_LIST_DIR}/vendor/entt
+    ${CMAKE_CURRENT_LIST_DIR}/vendor/yaml-cpp/include
     ${CMAKE_CURRENT_LIST_DIR}/vendor/imgui
     ${CMAKE_CURRENT_LIST_DIR}/vendor/imgui/backends
 )
@@ -51,6 +53,7 @@ PRIVATE
     glm
     imgui
     stb
+    yaml-cpp
 INTERFACE
     spdlog
 )

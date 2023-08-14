@@ -10,3 +10,9 @@
 [submodule "Magic/vendor/glm"]
 	path = Magic/vendor/glm
 	url = https://github.com/g-truc/glm.git
+[submodule "Magic/vendor/ImGuizmo"]
+	path = Magic/vendor/ImGuizmo
+	url = https://github.com/CedricGuillemet/ImGuizmo.git
+[submodule "Magic/vendor/yaml-cpp"]
+	path = Magic/vendor/yaml-cpp
+	url = https://github.com/jbeder/yaml-cpp.git

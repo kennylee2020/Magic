@@ -19,3 +19,4 @@
 #include "Magic/Scene/Components.h"
 #include "Magic/Scene/Entity.h"
 #include "Magic/Scene/Scene.h"
+#include "Magic/Scene/SceneSerializer.h"

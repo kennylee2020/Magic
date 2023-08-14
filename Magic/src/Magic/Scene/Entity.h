@@ -39,7 +39,17 @@ namespace Magic {
 		template<typename T>
 		bool HasComponent()
 		{
-			return m_Scene->m_Registry.get<T>(m_EntityHandle);
+			return m_Scene->m_Registry.any_of<T>(m_EntityHandle);
+		}
+	public:
+		operator bool() const { return m_EntityHandle != entt::null; }
+
+		bool operator==(const Entity& other) {
+			return m_EntityHandle == other.m_EntityHandle && m_Scene == other.m_Scene;
+		}
+
+		bool operator!=(const Entity& other) {
+			return !(*this == other);
 		}
 	private:
 		entt::entity m_EntityHandle;
