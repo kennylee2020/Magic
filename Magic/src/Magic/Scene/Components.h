@@ -1,9 +1,18 @@
 #pragma once
 
+#include "Magic/Core/UUID.h"
 #include "Magic/Core/Math.h"
 #include "Magic/Graphics/Graphics.h"
 
 namespace Magic {
+	struct IDComponent
+	{
+		UUID ID;
+		IDComponent() = default;
+		IDComponent(UUID uuid) : ID(uuid){};
+		IDComponent(const IDComponent&) = default;
+	};
+
 	struct NameComponent {
 		std::string Name;
 		NameComponent() = default;

@@ -1,11 +1,13 @@
 Scene: Unnamed
 Entities:
-  - ID: true
+  - Entity: 9957588767499781290
+    NameComponent: Entity
     TransformComponent:
       Position: [0, 0, -5]
       EulerAngles: [0, 0, 0]
       Scale: [1, 1, 1]
-  - ID: true
+  - Entity: 16610151973597194005
+    NameComponent: Entity
     TransformComponent:
       Position: [2, 0, 0]
       EulerAngles: [0, 0, 0]
@@ -15,7 +17,8 @@ Entities:
       Orthographic: true
       Near: 0.00999999978
       Far: 100
-  - ID: true
+  - Entity: 17295274970649110465
+    NameComponent: Entity
     TransformComponent:
       Position: [0, 0, 5]
       EulerAngles: [0, 0, 0]

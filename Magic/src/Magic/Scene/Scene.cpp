@@ -6,9 +6,20 @@
 #include "Magic/Scripting/ScriptEngine.h"
 
 namespace Magic {
-	Entity Scene::CreateEntity()
+	Entity Scene::CreateEntity(const std::string& name)
+	{
+		return CreateEntity(UUID(), name);
+	}
+
+	Entity Scene::CreateEntity(UUID uuid, const std::string& name)
 	{
 		Entity e{ m_Registry.create(), this };
+		e.AddComponent<IDComponent>(uuid);
+		e.AddComponent<NameComponent>(name.empty() ? "Entity" : name);
+
+		IDComponent idComponent = e.GetComponent<IDComponent>();
+
+		m_EntityMap[uuid] = e;
 		return e;
 	}
 
@@ -24,10 +35,12 @@ namespace Magic {
 		return Entity();
 	}
 
-	Entity Scene::FindEntity(uint32_t entityID)
+	Entity Scene::FindEntity(UUID uuid)
 	{
-		//Todo::change to UUID
-		return { entt::entity(entityID), this };
+		if (m_EntityMap.find(uuid) != m_EntityMap.end()) {
+			return {m_EntityMap.at(uuid), this};
+		}
+		return {};
 	}
 	
 	void Scene::OnEvent(Event& e)

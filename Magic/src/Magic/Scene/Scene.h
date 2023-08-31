@@ -1,6 +1,7 @@
 #pragma once
 
 #include <entt.hpp>
+#include "Magic/Core/UUID.h"
 #include "Magic/Event/Event.h"
 #include "Magic/Event/WindowEvent.h"
 
@@ -13,8 +14,9 @@ namespace Magic {
 	public:
 		Scene() = default;
 		~Scene() = default;
-		Entity CreateEntity();
-		Entity FindEntity(uint32_t entityID);
+		Entity CreateEntity(const std::string& name = std::string());
+		Entity CreateEntity(UUID uuid, const std::string& name = std::string());
+		Entity FindEntity(UUID entityID);
 		Entity FindEntity(const std::string& name);
 	public:
 		void OnEvent(Event& e);
@@ -25,6 +27,7 @@ namespace Magic {
 		bool OnWindowResize(WindowResizeEvent& e);
 	private:
 		entt::registry m_Registry;
+		std::unordered_map<UUID, entt::entity> m_EntityMap;
 	private:
 		friend class Entity;
 		friend class RenderPipeline;

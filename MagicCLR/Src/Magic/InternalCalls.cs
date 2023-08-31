@@ -15,23 +15,23 @@ namespace Magic
         public delegate* unmanaged<string, void> Debug_Error;
         public delegate* unmanaged<string, void> Debug_Critical;
         //Entity
-        public delegate* unmanaged<UInt32> Entity_Create;
-        public delegate* unmanaged<string, UInt32> Entity_FindEntity;
-        public delegate* unmanaged<UInt32, bool> Entity_HasComponent;
+        public delegate* unmanaged<UInt64> Entity_Create;
+        public delegate* unmanaged<string, UInt64> Entity_FindEntity;
+        public delegate* unmanaged<UInt64, bool> Entity_HasComponent;
         //NameComponent
-        public delegate* unmanaged<UInt32, void> NameComponent_Create;
-        public delegate* unmanaged<UInt32, string, void> NameComponent_SetName;
-        public delegate* unmanaged<UInt32, string> NameComponent_GetName;
+        public delegate* unmanaged<UInt64, void> NameComponent_Create;
+        public delegate* unmanaged<UInt64, string, void> NameComponent_SetName;
+        public delegate* unmanaged<UInt64, string> NameComponent_GetName;
         //ScriptComponent
-        public delegate* unmanaged<UInt32, ScriptComponent.LifeCycleCallbacks, void> ScriptComponent_Create;
+        public delegate* unmanaged<UInt64, ScriptComponent.LifeCycleCallbacks, void> ScriptComponent_Create;
         //TransformComponent
-        public delegate* unmanaged<UInt32, void> TransformComponent_Create;
-        public delegate* unmanaged<UInt32, Vector3, void> TransformComponent_SetPosition;
-        public delegate* unmanaged<UInt32, Vector3> TransformComponent_GetPosition;
-        public delegate* unmanaged<UInt32, Vector3, void> TransformComponent_SetEulerAngles;
-        public delegate* unmanaged<UInt32, Vector3> TransformComponent_GetEulerAngles;
-        public delegate* unmanaged<UInt32, Vector3, void> TransformComponent_SetScale;
-        public delegate* unmanaged<UInt32, Vector3> TransformComponent_GetScale;
+        public delegate* unmanaged<UInt64, void> TransformComponent_Create;
+        public delegate* unmanaged<UInt64, Vector3, void> TransformComponent_SetPosition;
+        public delegate* unmanaged<UInt64, Vector3> TransformComponent_GetPosition;
+        public delegate* unmanaged<UInt64, Vector3, void> TransformComponent_SetEulerAngles;
+        public delegate* unmanaged<UInt64, Vector3> TransformComponent_GetEulerAngles;
+        public delegate* unmanaged<UInt64, Vector3, void> TransformComponent_SetScale;
+        public delegate* unmanaged<UInt64, Vector3> TransformComponent_GetScale;
     }
 
     internal static class InternalCalls
@@ -116,16 +116,16 @@ namespace Magic
     }
 
     public unsafe partial class Entity{
-        internal static delegate* unmanaged<UInt32> nativeCreate;
-        internal static delegate* unmanaged<string, UInt32> nativeFindEntity;
-        internal static delegate* unmanaged<UInt32, bool> nativeHasComponent;
+        internal static delegate* unmanaged<UInt64> nativeCreate;
+        internal static delegate* unmanaged<string, UInt64> nativeFindEntity;
+        internal static delegate* unmanaged<UInt64, bool> nativeHasComponent;
     }
 
     public unsafe partial class NameComponent
     {
-        internal static delegate* unmanaged<UInt32, void> nativeCreate;
-        internal static delegate* unmanaged<UInt32, string, void> nativeSetName;
-        internal static delegate* unmanaged<UInt32, string> nativeGetName;
+        internal static delegate* unmanaged<UInt64, void> nativeCreate;
+        internal static delegate* unmanaged<UInt64, string, void> nativeSetName;
+        internal static delegate* unmanaged<UInt64, string> nativeGetName;
         internal override void Initialize() {
             nativeCreate(entity.ID);
         }
@@ -141,7 +141,7 @@ namespace Magic
             public delegate* unmanaged<void> OnDestroy;
         }
 
-        internal static delegate* unmanaged<UInt32, LifeCycleCallbacks, void> nativeCreate;
+        internal static delegate* unmanaged<UInt64, LifeCycleCallbacks, void> nativeCreate;
 
         internal override void Initialize() {
             LifeCycleCallbacks lifeCycleMethod = new LifeCycleCallbacks();
@@ -164,13 +164,13 @@ namespace Magic
     }
 
     public unsafe partial class TransformComponent{
-        internal static delegate* unmanaged<UInt32, void> nativeCreate;
-        internal static delegate* unmanaged<UInt32, Vector3, void> nativeSetPosition;
-        internal static delegate* unmanaged<UInt32, Vector3> nativeGetPosition;
-        internal static delegate* unmanaged<UInt32, Vector3, void> nativeSetEulerAngles;
-        internal static delegate* unmanaged<UInt32, Vector3> nativeGetEulerAngles;
-        internal static delegate* unmanaged<UInt32, Vector3, void> nativeSetScale;
-        internal static delegate* unmanaged<UInt32, Vector3> nativeGetScale;
+        internal static delegate* unmanaged<UInt64, void> nativeCreate;
+        internal static delegate* unmanaged<UInt64, Vector3, void> nativeSetPosition;
+        internal static delegate* unmanaged<UInt64, Vector3> nativeGetPosition;
+        internal static delegate* unmanaged<UInt64, Vector3, void> nativeSetEulerAngles;
+        internal static delegate* unmanaged<UInt64, Vector3> nativeGetEulerAngles;
+        internal static delegate* unmanaged<UInt64, Vector3, void> nativeSetScale;
+        internal static delegate* unmanaged<UInt64, Vector3> nativeGetScale;
         internal override void Initialize() {
             nativeCreate(entity.ID);
         }

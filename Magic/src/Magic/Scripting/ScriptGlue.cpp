@@ -30,34 +30,36 @@ namespace Magic {
 	}
 
 	namespace EntityCLR {
-		static uint32_t Create() {
-			return ScriptEngine::GetSceneContext()->CreateEntity();
+		static EntityID Create() {
+			Entity e = ScriptEngine::GetSceneContext()->CreateEntity();
+			return e.GetID();
 		}
 
-		static uint32_t FindEntity(const char* name) {
-			return ScriptEngine::GetSceneContext()->FindEntity(name);
+		static EntityID FindEntity(const char* name) {
+			Entity e = ScriptEngine::GetSceneContext()->FindEntity(name);
+			return e ? e.GetID() : 0;
 		}
 
-		static bool HasComponent(uint32_t entity) {
+		static bool HasComponent(EntityID entityID) {
 			return false;
 		}
 	}
 
 	namespace NameComponentCLR {
-		static void Create(uint32_t entityID) {
+		static void Create(EntityID entityID) {
 			Entity entity = ScriptEngine::GetSceneContext()->FindEntity(entityID);
 			if (!entity.HasComponent<NameComponent>()) {
 				entity.AddComponent<NameComponent>();
 			}
 		}
 
-		static void SetName(uint32_t entityID, const char* name) {
+		static void SetName(EntityID entityID, const char* name) {
 			Entity entity = ScriptEngine::GetSceneContext()->FindEntity(entityID);
 			NameComponent& nameComponent = entity.GetComponent<NameComponent>();
 			nameComponent.Name = name;
 		}
 
-		static const char* GetName(uint32_t entityID) {
+		static const char* GetName(EntityID entityID) {
 			Entity entity = ScriptEngine::GetSceneContext()->FindEntity(entityID);
 			NameComponent& nameComponent = entity.GetComponent<NameComponent>();
 			return nameComponent.Name.c_str();
@@ -65,7 +67,7 @@ namespace Magic {
 	}
 
 	namespace ScriptComponentCLR {
-		static void Create(uint32_t entityID, ScriptComponent::LifeCycleCallbacks lifeCycleMethod) {
+		static void Create(EntityID entityID, ScriptComponent::LifeCycleCallbacks lifeCycleMethod) {
 			Entity entity = ScriptEngine::GetSceneContext()->FindEntity(entityID);
 			if (!entity.HasComponent<ScriptComponent>()){
 				ScriptComponent& script = entity.AddComponent<ScriptComponent>(lifeCycleMethod);
@@ -74,42 +76,42 @@ namespace Magic {
 	}
 
 	namespace TransformComponentCLR {
-		static void Create(uint32_t entityID) {
+		static void Create(EntityID entityID) {
 			Entity entity = ScriptEngine::GetSceneContext()->FindEntity(entityID);
 			if (!entity.HasComponent<TransformComponent>()) entity.AddComponent<TransformComponent>();
 		}
 
-		static void SetPosition(uint32_t entityID, glm::vec3 position) {
+		static void SetPosition(EntityID entityID, glm::vec3 position) {
 			Entity entity = ScriptEngine::GetSceneContext()->FindEntity(entityID);
 			TransformComponent& transformComponent = entity.GetComponent<TransformComponent>();
 			transformComponent.SetPosition(position);
 		}
 
-		static glm::vec3 GetPosition(uint32_t entityID) {
+		static glm::vec3 GetPosition(EntityID entityID) {
 			Entity entity = ScriptEngine::GetSceneContext()->FindEntity(entityID);
 			TransformComponent& transformComponent = entity.GetComponent<TransformComponent>();
 			return transformComponent.GetPosition();
 		}
 
-		static void SetEulerAngles(uint32_t entityID, glm::vec3 eulerAngles) {
+		static void SetEulerAngles(EntityID entityID, glm::vec3 eulerAngles) {
 			Entity entity = ScriptEngine::GetSceneContext()->FindEntity(entityID);
 			TransformComponent& transformComponent = entity.GetComponent<TransformComponent>();
 			transformComponent.SetEulerAngles(eulerAngles);
 		}
 
-		static glm::vec3 GetEulerAngles(uint32_t entityID) {
+		static glm::vec3 GetEulerAngles(EntityID entityID) {
 			Entity entity = ScriptEngine::GetSceneContext()->FindEntity(entityID);
 			TransformComponent& transformComponent = entity.GetComponent<TransformComponent>();
 			return transformComponent.GetEulerAngles();
 		}
 
-		static void SetScale(uint32_t entityID, glm::vec3 scale) {
+		static void SetScale(EntityID entityID, glm::vec3 scale) {
 			Entity entity = ScriptEngine::GetSceneContext()->FindEntity(entityID);
 			TransformComponent& transformComponent = entity.GetComponent<TransformComponent>();
 			transformComponent.SetScale(scale);
 		}
 
-		static glm::vec3 GetScale(uint32_t entityID) {
+		static glm::vec3 GetScale(EntityID entityID) {
 			Entity entity = ScriptEngine::GetSceneContext()->FindEntity(entityID);
 			TransformComponent& transformComponent = entity.GetComponent<TransformComponent>();
 			return transformComponent.GetScale();

@@ -135,7 +135,7 @@ namespace Magic {
 	{
 		out << YAML::BeginMap;
 
-		out << YAML::Key << "ID" << YAML::Value << entity;
+		out << YAML::Key << "Entity" << YAML::Value << entity.GetID();
 		//NameComponent
 		if (entity.HasComponent<NameComponent>()) {
 			const NameComponent& nameComponent = entity.GetComponent<NameComponent>();
@@ -174,13 +174,10 @@ namespace Magic {
 
 	void SceneSerializer::DeserializeEntity(YAML::Node& entityNode)
 	{
-		Entity entity = m_Scene->CreateEntity();
-
+		uint64_t id = entityNode["Entity"].as<uint64_t>();
 		YAML::Node nameComponent = entityNode["NameComponent"];
-		if (nameComponent) {
-			const std::string& name = nameComponent.as<std::string>();
-			entity.AddComponent<NameComponent>(name);
-		}
+		const std::string& name = nameComponent.as<std::string>();
+		Entity entity = m_Scene->CreateEntity(id, name);
 
 		YAML::Node transformComponent = entityNode["TransformComponent"];
 		if (transformComponent) {

@@ -9,17 +9,17 @@ namespace Magic
         }
 
         public static Entity FindEntity(string name) {
-            UInt32 entityID = nativeFindEntity(name);
+            UInt64 entityID = nativeFindEntity(name);
             return new Entity(entityID);
         }
 
-        public readonly UInt32 ID;
+        public readonly UInt64 ID;
 
         protected Entity(){
             ID = nativeCreate();
         }
 
-        protected Entity(UInt32 id){
+        protected Entity(UInt64 id){
             ID = id;
         }
         
