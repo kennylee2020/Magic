@@ -30,10 +30,13 @@ namespace Sample {
 
 		Magic::SceneSerializer serializer(m_Scene);
 		serializer.Serialize("assets/scene/test.magic");
+
+		m_Scene->OnRuntimeStart();
 	}
 
 	void SampleLayer::OnUpdate()
 	{
+		m_Scene->OnRuntimeUpdate();
 		Magic::RenderPipeline::Render(m_Scene);
 	}
 		 

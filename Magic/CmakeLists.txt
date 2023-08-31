@@ -45,9 +45,11 @@ PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/vendor/imgui
     ${CMAKE_CURRENT_LIST_DIR}/vendor/imgui/backends
     ${CMAKE_CURRENT_LIST_DIR}/vendor/ImGuizmo
+    ${CMAKE_CURRENT_LIST_DIR}/vendor/coreclr/include
 )
 
-# 6.link library
+
+# 7.link library
 target_link_libraries(Magic
 PRIVATE
     glad

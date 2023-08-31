@@ -74,6 +74,24 @@ namespace Magic {
 		glm::mat4x4 m_worldToLocal;
 	};
 
+	struct ScriptComponent {
+		struct LifeCycleCallbacks
+		{
+			void (*OnCreate)();
+			void (*OnUpdate)();
+			void (*OnDestroy)();
+		};
+	public:
+		ScriptComponent() = default;
+		ScriptComponent(const ScriptComponent&) = default;
+		ScriptComponent(const LifeCycleCallbacks& lifeCycleCallbacks) : m_LifeCycleCallbacks(lifeCycleCallbacks) {}
+		void InvokeCreate() { if (m_LifeCycleCallbacks.OnCreate) m_LifeCycleCallbacks.OnCreate(); }
+		void InvokeUpdate() { if (m_LifeCycleCallbacks.OnUpdate) m_LifeCycleCallbacks.OnUpdate(); }
+		void InvokeDestroy(){ if (m_LifeCycleCallbacks.OnDestroy)m_LifeCycleCallbacks.OnDestroy(); }
+	private:
+		LifeCycleCallbacks m_LifeCycleCallbacks;
+	};
+
 	struct CameraComponent {
 	public:
 		CameraComponent() = default;

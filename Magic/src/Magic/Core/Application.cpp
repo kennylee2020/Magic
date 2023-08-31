@@ -3,6 +3,7 @@
 #include "Magic/Core/Application.h"
 #include "Magic/ImGui/ImGuiLayer.h"
 #include "Magic/Graphics/Graphics.h"
+#include "Magic/Scripting/ScriptEngine.h"
 
 namespace Magic {
 	Application* Application::s_Instance = nullptr;
@@ -16,9 +17,16 @@ namespace Magic {
 		m_Window->SetWindowEventCallback(BIND_EVENT_CALLBACK(Application::OnEvent));
 
 		Graphics::Init();
+		ScriptEngine::Init();
 		RendererCommand::SetViewPort(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
 
 		PushLayer(new ImGuiLayer());
+	}
+
+	Application::~Application()
+	{
+		Graphics::Shutdown();
+		ScriptEngine::Shutdown();
 	}
 
 	void Application::PushLayer(Layer* layer)

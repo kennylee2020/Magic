@@ -9,6 +9,10 @@ namespace Magic {
 		RendererCommand::Init();
 	}
 
+	void Graphics::Shutdown() {
+		
+	}
+
 	void Graphics::OnWindowResize(int width, int height)
 	{
 		RendererCommand::SetViewPort(0, 0, width, height);

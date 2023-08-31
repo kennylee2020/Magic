@@ -1,4 +1,6 @@
 #pragma once
+#include "Magic/Core/PlatformDetection.h"
+
 #include <string>
 #include <iostream>
 #include <memory>

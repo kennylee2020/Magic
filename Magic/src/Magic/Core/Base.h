@@ -6,6 +6,12 @@
 
 #define BIND_EVENT_CALLBACK(callback) std::bind(&callback, this, std::placeholders::_1)
 
+#ifdef _DEBUG
+	#define MAGIC_DEBUG
+#else
+	#define MAGIC_RELEASE
+#endif
+
 #ifdef NDEBUG
 #define ASSERT(_EXPR) ((void)0)
 #else

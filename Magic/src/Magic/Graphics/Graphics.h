@@ -10,6 +10,7 @@ namespace Magic {
 	class Graphics {
 	public:
 		static void Init();
+		static void Shutdown();
 		static void OnWindowResize(int width,int height);
 	};
 }

@@ -1,0 +1,11 @@
+//output
+obj
+
+//vs
+.vs
+*.vcxproj
+*.filters
+*.sln
+*.vcxproj
+*.user
+*.csproj

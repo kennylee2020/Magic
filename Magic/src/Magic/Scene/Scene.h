@@ -14,7 +14,13 @@ namespace Magic {
 		Scene() = default;
 		~Scene() = default;
 		Entity CreateEntity();
+		Entity FindEntity(uint32_t entityID);
+		Entity FindEntity(const std::string& name);
+	public:
 		void OnEvent(Event& e);
+		void OnRuntimeStart();
+		void OnRuntimeUpdate();
+		void OnRuntimeStop();
 	private:
 		bool OnWindowResize(WindowResizeEvent& e);
 	private:
@@ -23,5 +29,6 @@ namespace Magic {
 		friend class Entity;
 		friend class RenderPipeline;
 		friend class SceneSerializer;
+		friend class ScriptEngine;
 	};
 }
