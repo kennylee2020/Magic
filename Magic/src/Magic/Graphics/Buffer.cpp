@@ -22,4 +22,15 @@ namespace Magic {
 		}
 		return nullptr;
 	}
+
+	Ref<UniformBuffer> UniformBuffer::Create(uint32_t size, uint32_t binding)
+	{
+		RendererAPI::API api = RendererAPI::GetAPI();
+		switch (api)
+		{
+		case RendererAPI::API::OpenGL:
+			return CreateRef<OpenGLUniformBuffer>(size, binding);
+		}
+		return nullptr;
+	}
 }

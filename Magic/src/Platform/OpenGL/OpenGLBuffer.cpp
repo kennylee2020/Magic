@@ -20,6 +20,7 @@ namespace Magic {
 		MAG_CORE_ERROR("Unknown ShaderDataType {0}", (int)type);
 		return GL_NONE;
 	}
+
 	
 	/// <summary>
 	/// ////////////////////////////////// OpenGLBuffer ///////////////////////////////
@@ -60,6 +61,7 @@ namespace Magic {
 		}
 	}
 
+
 	/// <summary>
 	/// ////////////////////////////////// OpenGLIndexBuffer /////////////////////////////
 	/// </summary>
@@ -92,5 +94,27 @@ namespace Magic {
 		m_Count = count;
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererId);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t) * count, data, GL_STATIC_DRAW);
+	}
+
+
+	/// <summary>
+	/// ////////////////////////////////// OpenGLUniformBuffer /////////////////////////////
+	/// </summary>
+	OpenGLUniformBuffer::OpenGLUniformBuffer(uint32_t size, uint32_t binding)
+	{
+		glGenBuffers(1, &m_RendererID);
+		glBufferData(GL_UNIFORM_BUFFER, size, NULL, GL_DYNAMIC_DRAW);
+		glBindBufferBase(GL_UNIFORM_BUFFER, binding, m_RendererID);
+	}
+
+	OpenGLUniformBuffer::~OpenGLUniformBuffer()
+	{
+		glDeleteBuffers(1, &m_RendererID);
+	}
+
+	void OpenGLUniformBuffer::SetBufferData(const void* data, uint32_t size, uint32_t offset)
+	{
+		glBindBuffer(GL_UNIFORM_BUFFER, m_RendererID);
+		glBufferSubData(GL_UNIFORM_BUFFER, offset, size, data);
 	}
 }
