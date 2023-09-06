@@ -24,4 +24,14 @@ namespace Magic {
 		}
 		return nullptr;
 	}
+
+	Ref<RenderTexture> RenderTexture::Create(Ref<Framebuffer> framebuffer) {
+		RendererAPI::API api = RendererAPI::GetAPI();
+		switch (api)
+		{
+		case RendererAPI::API::OpenGL:
+			return CreateRef<OpenGLRenderTexture>(framebuffer);
+		}
+		return nullptr;
+	}
 }

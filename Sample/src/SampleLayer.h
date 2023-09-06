@@ -11,7 +11,10 @@ namespace Sample {
 	private:
 		bool OnKeyDownEvent(Magic::KeyDownEvent& e);
 	private:
+		Magic::Ref<Magic::Framebuffer> m_Framebuffer;
+		Magic::Ref<Magic::RenderTexture> m_RenderTexture;
 		Magic::Ref<Magic::Material> m_Material;
+		Magic::Ref<Magic::Material> m_PostMaterial;
 		Magic::Ref<Magic::Scene> m_Scene;
 		Magic::Entity m_CameraEntity;
 		Magic::Entity m_QuadEntity;

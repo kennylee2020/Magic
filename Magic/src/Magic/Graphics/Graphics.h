@@ -5,6 +5,7 @@
 #include "Magic/Graphics/Mesh.h"
 #include "Magic/Graphics/Material.h"
 #include "Magic/Graphics/RendererCommand.h"
+#include "Magic/Graphics/Framebuffer.h"
 
 namespace Magic {
 	class Graphics {

@@ -4,14 +4,27 @@
 
 namespace Sample {
 	SampleLayer::SampleLayer() : Layer("SampleLayer"){
-		m_Material = Magic::Material::Create(Magic::Shader::Create("assets/shader/pure_color.glsl"));
-		m_Material->SetTexture("u_Texture", Magic::Texture2D::Create("assets/image/test_img.png"));
-		m_Material->Bind();
-
 		m_Scene = Magic::CreateRef<Magic::Scene>();
+
 		Magic::Ref<Magic::Window> window = Magic::Application::GetApplication()->GetWindow();
 		int width = window->GetWidth();
 		int height = window->GetHeight();
+
+		Magic::FramebufferDescriptor desc;
+		desc.width = width;
+		desc.height = height;
+		desc.attachments = { Magic::FramebufferTextureFormat::RGBA8, Magic::FramebufferTextureFormat::DEPTH24STENCIL8 };
+		m_Framebuffer = Magic::Framebuffer::Create(desc);
+
+		m_RenderTexture = Magic::RenderTexture::Create(m_Framebuffer);
+
+		m_PostMaterial = Magic::Material::Create(Magic::Shader::Create("assets/shader/post_inverse.glsl"));
+		m_PostMaterial->SetTexture("u_ScreenTexture", m_RenderTexture);
+		m_PostMaterial->Bind();
+
+		m_Material = Magic::Material::Create(Magic::Shader::Create("assets/shader/pure_color.glsl"));
+		m_Material->SetTexture("u_Texture", Magic::Texture2D::Create("assets/image/test_img.png"));
+		m_Material->Bind();
 
 		Magic::Entity& cameraEntity = m_Scene->CreateEntity();
 		cameraEntity.AddComponent<Magic::TransformComponent>(glm::vec3(0.0f, 0.0f, 5.0f));
@@ -37,7 +50,14 @@ namespace Sample {
 	void SampleLayer::OnUpdate()
 	{
 		m_Scene->OnRuntimeUpdate();
+		m_Framebuffer->Bind();
+		Magic::RendererCommand::SetClearColor(glm::vec4(0));
 		Magic::RenderPipeline::Render(m_Scene);
+		m_Framebuffer->Unbind();
+
+		Magic::RendererCommand::Clear();
+		Magic::RendererCommand::SetClearColor(glm::vec4(0));
+		Magic::Renderer2D::DrawFullScreenQuad(m_PostMaterial);
 	}
 		 
 	void SampleLayer::OnImGui()

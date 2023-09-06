@@ -13,6 +13,7 @@ namespace Magic {
 		static void BeginScene(const glm::mat4x4& vpMatrix);
 		static void EndScene();
 		static void DrawMesh(const Ref<Mesh>& mesh, const Ref<Material>& material, const glm::mat4x4& localToWorld);
+		static void DrawFullScreenQuad(const Ref<Material>& material);
 	public:
 		static Ref<Mesh> Quad;
 	private:

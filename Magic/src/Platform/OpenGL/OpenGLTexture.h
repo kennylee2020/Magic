@@ -16,4 +16,16 @@ namespace Magic {
 		uint32_t m_RenderId;
 		int m_Width, m_Height;
 	};
+
+	class OpenGLRenderTexture : public RenderTexture {
+	public:
+		OpenGLRenderTexture(Ref<Framebuffer> framebuffer);
+		virtual ~OpenGLRenderTexture() override;
+		virtual void Bind(uint32_t slot) const override;
+		virtual void Unbind() const override;
+		virtual int GetWidth() const override;
+		virtual int GetHeight() const override;
+	private:
+		Ref<Framebuffer> m_Framebuffer;
+	};
 }

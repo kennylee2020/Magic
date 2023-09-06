@@ -1,4 +1,5 @@
 #include "Renderer2D.h"
+#include "Magic/Core/Math.h"
 
 namespace Magic {
 	Ref<Mesh> Renderer2D::Quad = nullptr;
@@ -38,6 +39,15 @@ namespace Magic {
 		mesh->Bind();
 		material->Bind();
 		material->SetMatrix4x4("u_MVP", mvp);
+		RendererCommand::DrawIndexed(mesh->GetIndexBuffer());
+	}
+
+	void Renderer2D::DrawFullScreenQuad(const Ref<Material>& material)
+	{
+		Ref<Mesh> mesh = Renderer2D::Quad;
+		mesh->Bind();
+		material->Bind();
+		material->SetMatrix4x4("u_MVP", glm::scale(glm::mat4(1), glm::vec3(2.0f, 2.0f, 1.0f)));
 		RendererCommand::DrawIndexed(mesh->GetIndexBuffer());
 	}
 }

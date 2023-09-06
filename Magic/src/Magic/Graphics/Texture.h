@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <memory>
+#include "Framebuffer.h"
 
 namespace Magic {
 	class Texture
@@ -22,5 +23,14 @@ namespace Magic {
 	public:
 		static Ref<Texture2D> Create(std::string filePath);
 		static Ref<Texture2D> Create(int width, int height, uint8_t* data);
+	};
+
+	class RenderTexture : public Texture
+	{
+	public:
+		RenderTexture() = default;
+		virtual ~RenderTexture() override = default;
+	public:
+		static Ref<RenderTexture> Create(Ref<Framebuffer> framebuffer);
 	};
 }

@@ -4,15 +4,15 @@
 #include "Magic/Scene/Components.h"
 
 namespace Magic {
+
+	void RenderPipeline::Init() 
+	{
+	}
+
 	void RenderPipeline::Render(const Ref<Scene>& scene)
 	{
 		BeginRendering();
-		auto view = scene->m_Registry.view<TransformComponent, CameraComponent>();
-		for (auto entity : view) {
-			TransformComponent& transformComponent = view.get<TransformComponent>(entity);
-			CameraComponent& cameraComponent = view.get<CameraComponent>(entity);
-			RenderCamera(cameraComponent, transformComponent, scene);
-		}
+		RenderCameras(scene);
 		EndRendering();
 	}
 
@@ -23,6 +23,15 @@ namespace Magic {
 
 	void RenderPipeline::EndRendering()
 	{
+	}
+
+	void RenderPipeline::RenderCameras(const Ref<Scene>& scene) {
+		auto view = scene->m_Registry.view<TransformComponent, CameraComponent>();
+		for (auto entity : view) {
+			TransformComponent& transformComponent = view.get<TransformComponent>(entity);
+			CameraComponent& cameraComponent = view.get<CameraComponent>(entity);
+			RenderCamera(cameraComponent, transformComponent, scene);
+		}
 	}
 
 	void RenderPipeline::RenderCamera(const CameraComponent& camera, const TransformComponent& transform, const Ref<Scene>& scene)

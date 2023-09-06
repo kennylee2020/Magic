@@ -5,6 +5,11 @@
 #include <glad/glad.h>
 
 namespace Magic {
+	/// <summary>
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////OpenGLTexture2D/////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+	/// </summary>
 	OpenGLTexture2D::OpenGLTexture2D(int width, int height, uint8_t* data) : m_Width(width),m_Height(height)
 	{
 		glGenTextures(1, &m_RenderId);
@@ -65,5 +70,39 @@ namespace Magic {
 	int OpenGLTexture2D::GetHeight() const
 	{
 		return m_Height;
+	}
+	/// <summary>
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////OpenGLRenderTexture/////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+	/// </summary>
+	OpenGLRenderTexture::OpenGLRenderTexture(Ref<Framebuffer> framebuffer) : m_Framebuffer(framebuffer)
+	{
+
+	}
+	OpenGLRenderTexture::~OpenGLRenderTexture()
+	{
+	}
+
+	void OpenGLRenderTexture::Bind(uint32_t slot) const
+	{
+		uint32_t renderId = m_Framebuffer->GetColorAttachmentRendererID();
+		glActiveTexture(GL_TEXTURE0 + slot);
+		glBindTexture(GL_TEXTURE_2D, renderId);
+	}
+
+	void OpenGLRenderTexture::Unbind() const
+	{
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
+	int OpenGLRenderTexture::GetWidth() const
+	{
+		return m_Framebuffer->GetWidth();
+	}
+
+	int OpenGLRenderTexture::GetHeight() const
+	{
+		return m_Framebuffer->GetHeight();
 	}
 }
