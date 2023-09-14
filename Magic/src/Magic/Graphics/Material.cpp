@@ -60,6 +60,10 @@ namespace Magic {
 
 	void Material::SetTexture(std::string name, const Ref<Texture>& texture)
 	{
+		if (std::find(m_Textures.cbegin(), m_Textures.cend(), texture) != m_Textures.cend()) {
+			return;
+		}
+
 		int slotIndex = (int)m_Textures.size();
 		m_Shader->SetInt(name, slotIndex);
 		m_Textures.push_back(texture);

@@ -44,6 +44,9 @@ namespace Sample {
 		Magic::SceneSerializer serializer(m_Scene);
 		serializer.Serialize("assets/scene/test.magic");
 
+		m_Font = Magic::Font::Create("assets/font/BitterPro-Regular.arfont");
+		m_FontMaterial = Magic::Material::Create(Magic::Shader::Create("assets/shader/font.glsl"));
+
 		m_Scene->OnRuntimeStart();
 	}
 
@@ -58,6 +61,8 @@ namespace Sample {
 		Magic::RendererCommand::Clear();
 		Magic::RendererCommand::SetClearColor(glm::vec4(0));
 		Magic::Renderer2D::DrawFullScreenQuad(m_PostMaterial);
+
+		Magic::Renderer2D::DrawString("Hello, Magic Text!\n2023-09-14", m_Font, m_FontMaterial, glm::vec3(10, 30, 0));
 	}
 		 
 	void SampleLayer::OnImGui()

@@ -16,3 +16,6 @@
 [submodule "Magic/vendor/yaml-cpp"]
 	path = Magic/vendor/yaml-cpp
 	url = https://github.com/jbeder/yaml-cpp.git
+[submodule "Magic/vendor/artery-font-format"]
+	path = Magic/vendor/artery-font-format
+	url = https://github.com/Chlumsky/artery-font-format.git

@@ -15,6 +15,8 @@ namespace Sample {
 		Magic::Ref<Magic::RenderTexture> m_RenderTexture;
 		Magic::Ref<Magic::Material> m_Material;
 		Magic::Ref<Magic::Material> m_PostMaterial;
+		Magic::Ref<Magic::Font> m_Font;
+		Magic::Ref<Magic::Material> m_FontMaterial;
 		Magic::Ref<Magic::Scene> m_Scene;
 		Magic::Entity m_CameraEntity;
 		Magic::Entity m_QuadEntity;
